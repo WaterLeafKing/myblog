@@ -111,26 +111,35 @@ const SwipeUI: React.FC = () => {
 
   return (
     <div className="relative my-8">
-      <div ref={containerRef} className="flex overflow-x-hidden rounded-lg">
+      <div
+        ref={containerRef}
+        className="relative flex overflow-x-hidden rounded-lg"
+      >
         {slides.map((slide) => (
-          <div key={slide.id} className="relative h-80 min-w-full">
+          <div key={slide.id} className="h-80 min-w-full">
             <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
           </div>
         ))}
       </div>
       <button
         onClick={handlePrev}
-        className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
+        className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
       >
         Prev
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
+        className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
       >
         Next
       </button>
-      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 space-x-2">
+      <div
+        className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 space-x-2"
+        style={{
+          transform: 'translate(-50%, 0)',
+          WebkitTransform: 'translate(-50%, 0)',
+        }}
+      >
         {slides.slice(1, -1).map((_, index) => (
           <div
             key={index}

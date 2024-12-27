@@ -111,7 +111,7 @@ const SwipeUI: React.FC = () => {
 
   return (
     <div className="relative my-8">
-      <div ref={containerRef} className="flex overflow-x-hidden rounded-lg">
+      <div ref={containerRef} className="flex overflow-x-hidden overflow-y-hidden rounded-lg">
         {slides.map((slide) => (
           <div key={slide.id} className="h-80 min-w-full">
             <HomeCard title={slide.text} imageUrl={slide.imageUrl} />

@@ -18,7 +18,7 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
       />
       <Link href="/">
         <h1 className="text-3xl font-thin text-slate-600 lg:text-4xl">
-          Z E K A
+          Seeking Insight
         </h1>
       </Link>
       <IconButton Icon={BsRobot} component={Link} href="/search" />

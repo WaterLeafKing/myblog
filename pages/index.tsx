@@ -13,6 +13,7 @@ interface Post {
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
 
+  
   const testFetch = async () => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
@@ -29,9 +30,9 @@ export default function Home() {
       setPostList(data);
     }
   };
-
+ 
   useEffect(() => {
-    testFetch();
+     testFetch();
   }, []);
 
   return (

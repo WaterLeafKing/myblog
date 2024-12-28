@@ -110,7 +110,7 @@ const SwipeUI: React.FC = () => {
   }, 6000);
 
   return (
-    <div className="relative my-4">
+    <div className="my-4">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {slides.map((slide) => (
           <div key={slide.id} className="h-80 min-w-full">
@@ -118,24 +118,12 @@ const SwipeUI: React.FC = () => {
           </div>
         ))}
       </div>
-      {/* <button
-        onClick={handlePrev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
-      >
-        Prev
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-gray-800/[.6] px-4 py-2 text-white"
-      >
-        Next
-      </button> */}
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 space-x-2">
+      <div className="mt-4 flex justify-center space-x-2">
         {slides.slice(1, -1).map((_, index) => (
           <div
             key={index}
             className={`size-2 rounded-full ${
-              currentIndex === index + 1 ? 'bg-white' : 'bg-gray-400'
+              currentIndex === index + 1 ? 'bg-gray-400' : 'bg-gray-200'
             }`}
           ></div>
         ))}

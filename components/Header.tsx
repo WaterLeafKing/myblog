@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import { BsRobot } from 'react-icons/bs';
+import { AiOutlineClose, AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
 import IconButton from './IconComponent';
 
 type HeaderProps = {
@@ -17,11 +16,11 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
         Icon={isSidebarOpen ? AiOutlineClose : AiOutlineMenu}
       />
       <Link href="/">
-        <h1 className="text-3xl font-thin text-slate-600 lg:text-4xl">
-          Seeking Insight
+        <h1 className="text-3xl font-thin text-slate-600 lg:text-3xl">
+          S e e k i n g &nbsp;&nbsp; I n s i g h t
         </h1>
       </Link>
-      <IconButton Icon={BsRobot} component={Link} href="/search" />
+      <IconButton Icon={AiOutlineSearch} component={Link} href="/search" />
     </header>
   );
 };

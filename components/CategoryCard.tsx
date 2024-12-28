@@ -1,20 +1,15 @@
 import { FC } from 'react';
 
-type CategoryCardProps = {};
+type CategoryCardProps = {
+  title: string;
+  icon?: string;
+};
 
-const CategoryCard: FC<CategoryCardProps> = () => {
+const CategoryCard: FC<CategoryCardProps> = ({ title, icon }) => {
   return (
-    <div className="flex h-40 gap-4">
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">Tesla</div>
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">Nvdia</div>
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">
-        Palantir
-      </div>
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">IonQ</div>
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">Apple</div>
-      <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">
-        Bitcoin
-      </div>
+    <div className="flex h-20 w-32 flex-col items-center justify-center rounded-lg border border-[#dcdcdc] text-gray-600">
+      {icon && <img src={icon} alt={title} className="size-6 brightness-0" />}
+      {title}
     </div>
   );
 };

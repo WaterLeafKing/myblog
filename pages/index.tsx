@@ -1,4 +1,4 @@
-import CategoryCard from '@/components/CategoryCard';
+import CategoryCardSection from '@/components/CategoryCardSection';
 import PostArticle from '@/components/PostArticle';
 import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
@@ -52,7 +52,7 @@ export default function Home() {
         ))}
       </div>
       <div className="my-8" />
-      <CategoryCard />
+      <CategoryCardSection />
       <div className="my-10" />
     </main>
   );

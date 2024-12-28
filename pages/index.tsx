@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import PostArticle from '@/components/PostArticle';
 import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,6 @@ interface Post {
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
 
-  
   const testFetch = async () => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
@@ -30,20 +29,20 @@ export default function Home() {
       setPostList(data);
     }
   };
- 
+
   useEffect(() => {
-     testFetch();
+    testFetch();
   }, []);
 
   return (
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
-      <div className="w-full">
+      <div className="my-8 w-full">
         <SwipeUI />
       </div>
-      <div className="sm:grid-cols-1 md:grid-cols-2 grid w-full gap-4 lg:grid-cols-2">
+      <div className="sm:grid-cols-1 md:grid-cols-1 grid w-full gap-4 lg:grid-cols-1">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index}>
-            <Card
+            <PostArticle
               image={item.preview_image_url}
               title={item.title}
               created_at={new Date(item.created_at).toISOString().split('T')[0]}
@@ -51,6 +50,7 @@ export default function Home() {
           </a>
         ))}
       </div>
+      <div className="my-20" />
     </main>
   );
 }

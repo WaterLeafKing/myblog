@@ -1,12 +1,8 @@
 import { FC } from 'react';
 
-type CategoryCardProps = {
-  image: string;
-  title: string;
-  created_at: string;
-};
+type CategoryCardProps = {};
 
-const CategoryCard: FC<CategoryCardProps> = ({ image, title, created_at }) => {
+const CategoryCard: FC<CategoryCardProps> = () => {
   return (
     <div className="flex h-40 gap-4">
       <div className="w-32 rounded-lg border  border-[#d5d5d5] p-4">Tesla</div>

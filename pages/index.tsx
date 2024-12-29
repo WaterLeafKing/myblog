@@ -76,7 +76,7 @@ export default function Home() {
           </a>
         ))}
       </div>
-      <div className="my-10" />
+      <div className="my-20" />
     </main>
   );
 }

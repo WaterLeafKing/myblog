@@ -24,8 +24,11 @@ const PostArticle: FC<PostArticleProps> = ({
           </div>
         </div>
       </div>
-      <div className="flex w-52 shrink-0 flex-col">
-        <img className="h-32 w-52 rounded-lg object-cover" src={image} />
+      <div className="flex w-52 shrink-0 flex-col overflow-hidden">
+        <img
+          className="h-32 w-52 rounded-lg object-cover transition-transform duration-1000 ease-in-out lg:hover:scale-110"
+          src={image}
+        />
       </div>
     </div>
   );

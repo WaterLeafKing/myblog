@@ -62,6 +62,13 @@ export default function Home() {
       <div className="my-4 w-full">
         <SwipeUI />
       </div>
+      <div className="flex justify-center font-extralight">
+        <div className="flex cursor-pointer italic hover:text-orange-400">
+          당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
+          때까지 일을 해야 할 것이다
+        </div>
+      </div>
+      <div className="my-4" />
       <CategoryCardSection categories={CategoryList} />
       <div className="my-4" />
       <div className="sm:grid-cols-1 md:grid-cols-1 grid w-full gap-4 lg:grid-cols-1">

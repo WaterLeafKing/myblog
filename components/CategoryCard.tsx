@@ -7,8 +7,8 @@ type CategoryCardProps = {
 
 const CategoryCard: FC<CategoryCardProps> = ({ title, icon }) => {
   return (
-    <div className="flex h-20 w-32 flex-col items-center justify-center rounded-lg border border-[#dcdcdc] text-gray-600">
-      {icon && <img src={icon} alt={title} className="size-6 brightness-0" />}
+    <div className="flex h-16 w-24 cursor-pointer flex-col items-center justify-center rounded-lg border border-[#dcdcdc] text-xs text-gray-600 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border hover:border-orange-300 hover:shadow-md">
+      {icon && <img src={icon} alt={title} className="size-4 brightness-0" />}
       {title}
     </div>
   );

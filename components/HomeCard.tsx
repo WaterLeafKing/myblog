@@ -7,7 +7,7 @@ type HomeCardProps = {
 
 const HomeCard: FC<HomeCardProps> = ({ imageUrl, title }) => {
   return (
-    <div className="">
+    <div className="cursor-pointer">
       <img
         className="object-cover transition-transform duration-1000 ease-in-out lg:hover:scale-110"
         src={imageUrl}

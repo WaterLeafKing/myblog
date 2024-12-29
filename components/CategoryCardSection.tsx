@@ -1,35 +1,67 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import CategoryCard from './CategoryCard';
 
-type CategoryCardSectionProps = {};
+type CategoryCardSectionProps = {
+  categories: Category[];
+};
 
-const CategoryCardSection: FC<CategoryCardSectionProps> = () => {
+interface Category {
+  id: number;
+  title: string;
+  icon: string;
+}
+
+const CategoryCardSection: FC<CategoryCardSectionProps> = ({ categories }) => {
+  // Add ref for the scrollable container
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {}, []);
+
+  // Add scroll handler
+  const handleScrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 200, // Scroll by 200px - adjust this value as needed
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  // Add scroll handler
+  const handleScrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -200, // Scroll by 200px - adjust this value as needed
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
-    <div className="flex gap-4">
-      <CategoryCard
-        title="Tesla"
-        icon={
-          'https://cdn.iconscout.com/icon/free/png-256/free-tesla-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-7-pack-logos-icons-2945257.png?f=webp&w=256'
-        }
-      />
-      <CategoryCard
-        title="Nvdia"
-        icon={
-          'https://cdn.iconscout.com/icon/free/png-512/free-nvidia-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-5-pack-logos-icons-3030185.png?f=webp&w=512'
-        }
-      />
-      <CategoryCard
-        title="Palantir"
-        icon={'https://www.svgrepo.com/show/306533/palantir.svg'}
-      />
-      <CategoryCard
-        title="IonQ"
-        icon={
-          'https://companieslogo.com/img/orig/IONQ-f072dd64.png?t=1720244492'
-        }
-      />
-      {/*<CategoryCard title="Apple" />
-      <CategoryCard title="Bitcoin" /> */}
+    <div className="group relative flex items-center justify-between">
+      <button
+        onClick={handleScrollLeft}
+        className="absolute left-0 z-10 rounded-full p-2 opacity-0 transition-opacity duration-300 ease-in-out hover:bg-gray-100/50 group-hover:opacity-100"
+      >
+        <IoIosArrowBack size={24} />
+      </button>
+      <div
+        ref={scrollContainerRef}
+        className="flex overflow-x-scroll py-2 pl-0 pr-10 scrollbar-hide"
+      >
+        <div className="flex gap-2 scrollbar-hide">
+          {categories.map((item, index) => (
+            <CategoryCard key={index} title={item.title} icon={item.icon} />
+          ))}
+        </div>
+      </div>
+      <button
+        onClick={handleScrollRight}
+        className="absolute right-0 z-10 rounded-full p-2 opacity-0 transition-opacity duration-300 ease-in-out hover:bg-gray-100/50 group-hover:opacity-100"
+      >
+        <IoIosArrowForward size={24} />
+      </button>
     </div>
   );
 };

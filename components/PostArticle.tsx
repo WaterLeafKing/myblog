@@ -15,10 +15,10 @@ const PostArticle: FC<PostArticleProps> = ({
 }) => {
   return (
     <div className="flex h-32 gap-2">
-      <div className="text-xl font-extralight text-gray-500">주식 |</div>
+      <div className="text-lg font-extralight text-gray-500">주식 |</div>
       <div className="relative flex min-w-0 flex-1 flex-col">
         <div className="flex h-full flex-col">
-          <div className="text-lg text-gray-700">{title}</div>
+          <div className="text-base text-gray-700">{title}</div>
           <div className="line-clamp-4 overflow-hidden text-sm font-light text-gray-600">
             {content}
           </div>

@@ -85,6 +85,7 @@ export default function Home() {
           </a>
         ))}
       </div>
+      <div className="flex justify-center my-8">about</div>
       <div className="my-20" />
     </main>
   );

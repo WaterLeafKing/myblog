@@ -113,7 +113,7 @@ const SwipeUI: React.FC = () => {
   }, 6000);
 
   return (
-    <div className="my-4">
+    <div className="my-4 relative group">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide) => (
           <div key={slide.id} className="h-80 min-w-full">
@@ -121,7 +121,26 @@ const SwipeUI: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="mt-4 flex justify-center space-x-2">
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-2 top-[calc(50%-28px)] bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-2 top-[calc(50%-28px)] bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+
+      <div className="mt-2 flex justify-center space-x-2">
         {postList.slice(1, -1).map((_, index) => (
           <div
             key={index}

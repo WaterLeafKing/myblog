@@ -1,3 +1,4 @@
+import CategoryCard from '@/components/CategoryCard';
 import CommentInput from '@/components/CommentInput';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
@@ -12,6 +13,7 @@ interface Post {
   id: number;
   preview_image_url: string;
   title: string;
+  content: string;
   created_at: string;
 }
 
@@ -26,7 +28,7 @@ export default function Post({ id }: PostProps) {
 
     const { data, error } = await supabase
       .from('Post')
-      .select('id, preview_image_url, title, created_at')
+      .select('id, preview_image_url, title, content, created_at')
       .eq('id', id)
       .single();
 
@@ -42,12 +44,16 @@ export default function Post({ id }: PostProps) {
   }, [id]);
 
   return (
-    <div className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
+    <div className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8 my-8">
       {post ? (
         <>
-          <div className="text-3xl">{post.title}</div>
-          <img src={post.preview_image_url} alt={post.title} />
-          <p>Created at: {post.created_at}</p>
+        <div className="flex justify-between items-center">
+          <div><CategoryCard title="IT"/></div>
+          <div>share</div>
+        </div>
+        <div className="text-4xl font-bold my-4 mb-8">{post.title}</div>
+        <img src={post.preview_image_url} alt={post.title} className="rounded-lg"/>
+        <div className="my-4">{post.content}</div>
         </>
       ) : (
         <p>Loading...</p>

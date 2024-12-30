@@ -117,7 +117,9 @@ const SwipeUI: React.FC = () => {
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide) => (
           <div key={slide.id} className="h-80 min-w-full">
+            <a href={'/posts/' + slide.id}>
             <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
+            </a>
           </div>
         ))}
       </div>

@@ -1,9 +1,15 @@
 import CategoryCard from '@/components/CategoryCard';
+import CommentCard from '@/components/CommentCard';
 import CommentInput from '@/components/CommentInput';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+
+const MDViewer = dynamic(() => import('@uiw/react-markdown-preview'), {
+  ssr: false,
+});
 
 type PostProps = {
   id: number;
@@ -53,7 +59,9 @@ export default function Post({ id }: PostProps) {
         </div>
         <div className="text-4xl font-bold my-4 mb-8">{post.title}</div>
         <img src={post.preview_image_url} alt={post.title} className="rounded-lg"/>
-        <div className="my-4">{post.content}</div>
+        <div className="my-4">
+          <MDViewer source={post.content}/>
+        </div>
         </>
       ) : (
         <p>Loading...</p>
@@ -66,6 +74,8 @@ export default function Post({ id }: PostProps) {
       </div>
       <div>좋아요</div>
       <CommentInput />
+      <CommentCard comment="이곳은 댓글입니다"/>
+      <div className='my-8'></div>
     </div>
   );
 }

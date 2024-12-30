@@ -48,9 +48,9 @@ const CategoryCardSection: FC<CategoryCardSectionProps> = ({ categories }) => {
       </button>
       <div
         ref={scrollContainerRef}
-        className="w-full max-w-[100vw] flex overflow-x-scroll py-2 pl-0 pr-10 scrollbar-hide"
+        className="flex overflow-x-scroll py-2 pl-0 pr-10 scrollbar-hide"
       >
-        <div className="flex gap-2 scrollbar-hide w-full">
+        <div className="flex gap-2 scrollbar-hide">
           {categories.map((item, index) => (
             <CategoryCard key={index} title={item.title} icon={item.icon} />
           ))}

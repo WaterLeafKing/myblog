@@ -28,7 +28,9 @@ export default function Home() {
   const testFetch = async () => {
     const { data, error } = await supabase
       .from('Post')
-      .select('id, preview_image_url, title, created_at, content');
+      .select('id, preview_image_url, title, created_at, content')
+      .order('created_at', { ascending: false })
+      .range(3, 999999);
 
     if (error) {
       console.log(error);

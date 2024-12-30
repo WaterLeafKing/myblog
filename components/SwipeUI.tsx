@@ -1,49 +1,48 @@
 import useInterval from '@/utils/useInterval';
 import React, { useEffect, useRef, useState } from 'react';
 import HomeCard from './HomeCard';
+import { createClient } from '@supabase/supabase-js';
+
+interface Post {
+  id: number;
+  text: string;
+  imageUrl: string;
+}
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 
 const SwipeUI: React.FC = () => {
+  const [postList, setPostList] = useState<Post[]>([]); 
+
+  const fetchRecentPostList = async () => {
+    const { data, error } = await supabase
+      .from('Post')
+      .select('id, preview_image_url, title, created_at, content')
+      .limit(3)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.log(error);
+    } else {
+      let tempList: {id: number, text: string, imageUrl: string}[] = [];
+      tempList.push({id: data[2].id, text: data[2].title, imageUrl: data[2].preview_image_url});
+      data.map((item) => {
+        tempList.push({id: item.id, text: item.title, imageUrl: item.preview_image_url});
+      });
+      tempList.push({id: data[0].id, text: data[0].title, imageUrl: data[0].preview_image_url});
+     
+      setPostList(tempList || []);
+    }
+  };
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(1); // Start from the first actual slide
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const slides = [
-    {
-      id: 0,
-      color: 'bg-green-500',
-      text: 'Slide 3',
-      imageUrl:
-        'https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq',
-    }, // Clone of the last slide
-    {
-      id: 1,
-      color: 'bg-blue-500',
-      text: 'Slide 1',
-      imageUrl:
-        'https://a0.muscache.com/im/pictures/miso/Hosting-782615921189136934/original/c67f78f1-5807-449a-9a88-753b7fa62d6a.jpeg?im_w=2560&im_q=highq',
-    },
-    {
-      id: 2,
-      color: 'bg-red-500',
-      text: 'Slide 2',
-      imageUrl:
-        'https://a0.muscache.com/im/pictures/miso/Hosting-857387972692815761/original/d106e0ef-f825-4ff8-baf7-86256a54fbd5.jpeg?im_w=2560&im_q=highq',
-    },
-    {
-      id: 3,
-      color: 'bg-green-500',
-      text: 'Slide 3',
-      imageUrl:
-        'https://a0.muscache.com/im/pictures/miso/Hosting-881808599061267756/original/b16970cf-1d55-4edd-bb1f-e1735d0a228e.jpeg?im_w=2560&im_q=highq',
-    },
-    {
-      id: 4,
-      color: 'bg-blue-500',
-      text: 'Slide 1',
-      imageUrl:
-        'https://a0.muscache.com/im/pictures/miso/Hosting-782615921189136934/original/c67f78f1-5807-449a-9a88-753b7fa62d6a.jpeg?im_w=2560&im_q=highq',
-    }, // Clone of the first slide
-  ];
-
+  
   const handleNext = () => {
     if (containerRef.current && !isTransitioning) {
       setIsTransitioning(true);
@@ -54,7 +53,7 @@ const SwipeUI: React.FC = () => {
         behavior: 'smooth',
       });
       setTimeout(() => {
-        if (newIndex === slides.length - 1) {
+        if (newIndex === postList.length - 1) {
           setCurrentIndex(1); // Jump to the first actual slide
           containerRef.current!.scrollTo({
             left: containerRef.current!.clientWidth,
@@ -77,9 +76,9 @@ const SwipeUI: React.FC = () => {
       });
       setTimeout(() => {
         if (newIndex === 0) {
-          setCurrentIndex(slides.length - 2); // Jump to the last actual slide
+          setCurrentIndex(postList.length - 2); // Jump to the last actual slide
           containerRef.current!.scrollTo({
-            left: containerRef.current!.clientWidth * (slides.length - 2),
+            left: containerRef.current!.clientWidth * (postList.length - 2),
             behavior: 'auto',
           });
         }
@@ -87,6 +86,10 @@ const SwipeUI: React.FC = () => {
       }, 500); // Debounce for 500ms
     }
   };
+   
+  useEffect(() => {
+    fetchRecentPostList();
+  }, []);
 
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
@@ -112,14 +115,14 @@ const SwipeUI: React.FC = () => {
   return (
     <div className="my-4">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
-        {slides.map((slide) => (
+        {postList.map((slide) => (
           <div key={slide.id} className="h-80 min-w-full">
             <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
           </div>
         ))}
       </div>
       <div className="mt-4 flex justify-center space-x-2">
-        {slides.slice(1, -1).map((_, index) => (
+        {postList.slice(1, -1).map((_, index) => (
           <div
             key={index}
             className={`size-2 rounded-full ${

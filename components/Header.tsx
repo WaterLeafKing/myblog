@@ -17,7 +17,7 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
       />
       <Link href="/">
         <h1 className="text-3xl font-thin text-slate-600 lg:text-3xl">
-          S e e k i n g &nbsp;&nbsp; I n s i g h t
+          N e r d &nbsp;&nbsp; I n s i g h t
         </h1>
       </Link>
       <IconButton Icon={AiOutlineSearch} component={Link} href="/search" />

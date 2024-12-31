@@ -9,7 +9,6 @@ interface Post {
   preview_image_url: string;
   title: string;
   created_at: string;
-  content: string;
 }
 interface Category {
   id: number;
@@ -30,7 +29,7 @@ export default function Home() {
       .from('Post')
       .select('id, preview_image_url, title, created_at, content')
       .order('created_at', { ascending: false })
-      .range(3, 999999);
+      .range(3, 13);
 
     if (error) {
       console.log(error);
@@ -65,7 +64,7 @@ export default function Home() {
         <SwipeUI />
       </div>
       <div className="flex justify-center font-extralight">
-        <div className="flex cursor-pointer italic hover:text-orange-400">
+        <div className="flex cursor-pointer italic text-sm hover:text-orange-400">
           당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
           때까지 일을 해야 할 것이다
         </div>
@@ -73,14 +72,14 @@ export default function Home() {
       <div className="my-4" />
       <CategoryCardSection categories={CategoryList} />
       <div className="my-4" />
-      <div className="sm:grid-cols-1 md:grid-cols-1 grid w-full gap-4 lg:grid-cols-1">
+      <div className="sm:grid-cols-1 md:grid-cols-1 grid w-full gap-1 lg:grid-cols-1">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index}>
             <PostArticle
               image={item.preview_image_url}
               title={item.title}
               created_at={new Date(item.created_at).toISOString().split('T')[0]}
-              content={item.content}
+           
             />
           </a>
         ))}

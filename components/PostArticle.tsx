@@ -5,17 +5,18 @@ type PostArticleProps = {
   image: string;
   title: string;
   created_at: string;
+  category: string;
 };
 
 const PostArticle: FC<PostArticleProps> = ({
   image,
   title,
-  created_at,
+  category,
 }) => {
   return (
     <div className="flex h-32">
-      <div className="text-lg font-extralight text-gray-500">
-        <div>주식 | &nbsp;</div>
+      <div className="text-base font-extralight text-gray-500">
+      <div>{category} | &nbsp;</div>
       </div>
       <div className="relative flex min-w-0 flex-1 flex-col">
         <div className="flex h-full flex-col">

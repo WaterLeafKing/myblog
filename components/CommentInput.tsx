@@ -1,6 +1,10 @@
 import { FC } from 'react';
 
-const CommentInput: FC = () => {
+interface CommentInputProps {
+  text : string;
+}
+
+const CommentInput: FC<CommentInputProps> = ({text}) => {
   return (
     <div className="flex">
       <input

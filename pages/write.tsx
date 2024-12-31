@@ -16,6 +16,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function Home() {
   const [title, setTitle] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
   const [CategoryList, setCategoryList] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -52,8 +53,8 @@ export default function Home() {
     setIsSubmitting(true);
 
     // Validate required fields
-    if (!title || !content) {
-      alert('제목과 내용을 입력해주세요.');
+    if (!title || !content || !thumbnail) {
+      alert('제목과 썸네일, 내용을 입력해주세요.');
       setIsSubmitting(false);
       return;
     }
@@ -61,6 +62,7 @@ export default function Home() {
     try {
       const postData = {
         title,
+        preview_image_url:thumbnail,
         content,
         ...(selectedCategory && { categoryId: selectedCategory }), // Only include categoryId if selected
       };
@@ -88,7 +90,7 @@ export default function Home() {
   };
 
   return (
-    <main className="mx-auto flex flex-col px-4 pt-4">
+    <main className="mx-auto flex flex-col px-4 pt-12">
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <input
@@ -96,6 +98,12 @@ export default function Home() {
             placeholder="제목"
             className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
             onChange={(e) => setTitle(e.target.value || '')}
+          />
+          <input
+            type="text"
+            placeholder="Thumbnail URL"
+            className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
+            onChange={(e) => setThumbnail(e.target.value || '')}
           />
           <input
             type="file"
@@ -123,6 +131,7 @@ export default function Home() {
           {isSubmitting ? '작성 중...' : '작성하기'}
         </button>
       </form>
+      <div className='my-10'></div>
     </main>
   );
 }

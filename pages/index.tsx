@@ -9,6 +9,7 @@ interface Post {
   preview_image_url: string;
   title: string;
   created_at: string;
+  category: string;
 }
 interface Category {
   id: number;
@@ -27,14 +28,21 @@ export default function Home() {
   const testFetch = async () => {
     const { data, error } = await supabase
       .from('Post')
-      .select('id, preview_image_url, title, created_at, content')
+      .select(`
+        id,
+        preview_image_url,
+        title,
+        created_at,
+        content,
+        category
+      `)
       .order('created_at', { ascending: false })
       .range(3, 13);
 
     if (error) {
       console.log(error);
     } else {
-      setPostList(data || []);
+      setPostList((data || []));
     }
   };
 
@@ -79,7 +87,7 @@ export default function Home() {
               image={item.preview_image_url}
               title={item.title}
               created_at={new Date(item.created_at).toISOString().split('T')[0]}
-           
+              category={item.category}
             />
           </a>
         ))}

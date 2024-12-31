@@ -6,6 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { AiOutlineHeart } from 'react-icons/ai';
 
 const MDViewer = dynamic(() => import('@uiw/react-markdown-preview'), {
   ssr: false,
@@ -25,6 +26,7 @@ interface Post {
 
 export default function Post({ id }: PostProps) {
   const [post, setPost] = useState<Post>();
+  const [comment, setComment] = useState<string>('');
 
   const fetchPost = async (id: number) => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -52,12 +54,13 @@ export default function Post({ id }: PostProps) {
   return (
     <div className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8 my-8">
       {post ? (
-        <>
+        <>        
+        <div className="text-4xl font-bold my-4 mb-8">{post.title}</div>
         <div className="flex justify-between items-center">
           <div><CategoryCard title="IT"/></div>
           <div>share</div>
         </div>
-        <div className="text-4xl font-bold my-4 mb-8">{post.title}</div>
+        <div className="my-4 mb-8"></div>
         <img src={post.preview_image_url} alt={post.title} className="rounded-lg"/>
         <div className="my-4">
           <MDViewer source={post.content}/>
@@ -72,8 +75,10 @@ export default function Post({ id }: PostProps) {
         <Tag tag="travel" />
         <Tag tag="space" />
       </div>
-      <div>좋아요</div>
-      <CommentInput />
+      <div className="cursor-pointer">
+        <AiOutlineHeart size={24} />
+      </div>
+      <CommentInput text={'comment'}/>
       <CommentCard comment="이곳은 댓글입니다"/>
       <div className='my-8'></div>
     </div>

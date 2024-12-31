@@ -30,7 +30,7 @@ const SwipeUI: React.FC = () => {
     } else {
       let tempList: {id: number, text: string, imageUrl: string}[] = [];
       tempList.push({id: data[2].id, text: data[2].title, imageUrl: data[2].preview_image_url});
-      data.map((item) => {
+      data.map((item, index) => {
         tempList.push({id: item.id, text: item.title, imageUrl: item.preview_image_url});
       });
       tempList.push({id: data[0].id, text: data[0].title, imageUrl: data[0].preview_image_url});
@@ -115,8 +115,8 @@ const SwipeUI: React.FC = () => {
   return (
     <div className="my-4 relative group">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
-        {postList.map((slide) => (
-          <div key={slide.id} className="h-80 min-w-full">
+        {postList.map((slide, index) => (
+          <div key={index} className="h-80 min-w-full">
             <a href={'/posts/' + slide.id}>
             <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
             </a>

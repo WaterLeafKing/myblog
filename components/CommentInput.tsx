@@ -67,7 +67,7 @@ const CommentInput: FC<CommentInputProps> = ({postId}) => {
           </button>
           <button 
             type="submit"            
-            className="ml-2 px-4 py-2 border text-gray-800 rounded-md hover:border hover:border-orange-300 transition duration-300 text-sm hover:border-orange-400"
+            className="ml-2 px-4 py-2 border text-gray-800 rounded-md hover:border hover:border-orange-300 transition duration-300 text-sm"
           >
             등록
           </button>

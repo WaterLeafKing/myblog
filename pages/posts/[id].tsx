@@ -95,10 +95,12 @@ export default function Post({ id }: PostProps) {
         <Tag tag="travel" />
         <Tag tag="space" />
       </div>
-      <div className="cursor-pointer">
+      <div className="cursor-pointer ">
         <AiOutlineHeart size={24} />
       </div>
-      <CommentInput postId={id} />
+      <div className="my-4">
+        <CommentInput postId={id} />
+      </div>
       {commentList.map((item, index) => (
         <CommentCard key={index} comment={item.comment} />
       ))}

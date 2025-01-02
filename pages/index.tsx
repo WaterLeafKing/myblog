@@ -73,19 +73,26 @@ export default function Home() {
       <div className="my-10 flex w-full gap-2">
         <SwipeUI />
         <div>
-          <div className="flex h-12 w-44 items-center justify-center rounded-lg border border-gray-300">
+          <div className="flex h-12 w-44 items-center justify-center rounded-lg border border-gray-300 hover:cursor-pointer hover:border hover:border-orange-400">
             의견 사서함
           </div>
-          <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-center rounded-lg border border-gray-300 bg-[#9EFE08] hover:cursor-pointer hover:border-orange-400">
-            <div className="flex w-full justify-center">
-              <img
-                src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791193078310.jpg"
-                className="w-32"
-              />
+          <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400">
+            <div className="mb-2 w-full flex-col items-center justify-center ">
+              <div className="flex items-center justify-center text-base">
+                이 달의&nbsp;
+                <span className="font-bold text-green-600">책</span>
+              </div>
+              <div className="flex items-center justify-center text-base">
+                <img
+                  src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791191283594.jpg"
+                  className="w-32"
+                />
+              </div>
             </div>
           </div>
-          <div className="flex items-center justify-center text-sm">
-            이 달의&nbsp;<span className="font-bold text-green-600">책</span>
+          <div className="mt-2 flex justify-center space-x-2">
+            <div className={`size-2 rounded-full bg-gray-400`}></div>
+            <div className={`size-2 rounded-full bg-gray-300`}></div>
           </div>
         </div>
       </div>

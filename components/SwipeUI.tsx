@@ -1,7 +1,7 @@
 import useInterval from '@/utils/useInterval';
+import { createClient } from '@supabase/supabase-js';
 import React, { useEffect, useRef, useState } from 'react';
 import HomeCard from './HomeCard';
-import { createClient } from '@supabase/supabase-js';
 
 interface Post {
   id: number;
@@ -14,9 +14,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-
 const SwipeUI: React.FC = () => {
-  const [postList, setPostList] = useState<Post[]>([]); 
+  const [postList, setPostList] = useState<Post[]>([]);
 
   const fetchRecentPostList = async () => {
     const { data, error } = await supabase
@@ -28,13 +27,25 @@ const SwipeUI: React.FC = () => {
     if (error) {
       console.log(error);
     } else {
-      let tempList: {id: number, text: string, imageUrl: string}[] = [];
-      tempList.push({id: data[2].id, text: data[2].title, imageUrl: data[2].preview_image_url});
-      data.map((item, index) => {
-        tempList.push({id: item.id, text: item.title, imageUrl: item.preview_image_url});
+      let tempList: { id: number; text: string; imageUrl: string }[] = [];
+      tempList.push({
+        id: data[2].id,
+        text: data[2].title,
+        imageUrl: data[2].preview_image_url,
       });
-      tempList.push({id: data[0].id, text: data[0].title, imageUrl: data[0].preview_image_url});
-     
+      data.map((item, index) => {
+        tempList.push({
+          id: item.id,
+          text: item.title,
+          imageUrl: item.preview_image_url,
+        });
+      });
+      tempList.push({
+        id: data[0].id,
+        text: data[0].title,
+        imageUrl: data[0].preview_image_url,
+      });
+
       setPostList(tempList || []);
     }
   };
@@ -42,7 +53,7 @@ const SwipeUI: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(1); // Start from the first actual slide
   const [isTransitioning, setIsTransitioning] = useState(false);
-  
+
   const handleNext = () => {
     if (containerRef.current && !isTransitioning) {
       setIsTransitioning(true);
@@ -86,7 +97,7 @@ const SwipeUI: React.FC = () => {
       }, 500); // Debounce for 500ms
     }
   };
-   
+
   useEffect(() => {
     fetchRecentPostList();
   }, []);
@@ -113,12 +124,12 @@ const SwipeUI: React.FC = () => {
   }, 6000);
 
   return (
-    <div className="my-4 relative group">
+    <div className="group relative w-3/4">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide, index) => (
-          <div key={index} className="h-80 min-w-full">
+          <div key={index} className="h-72 min-w-full">
             <a href={'/posts/' + slide.id}>
-            <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
+              <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
             </a>
           </div>
         ))}
@@ -127,18 +138,40 @@ const SwipeUI: React.FC = () => {
       {/* Navigation Buttons */}
       <button
         onClick={handlePrev}
-        className="absolute left-2 top-[calc(50%-28px)] bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        className="duration-400 absolute left-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
         </svg>
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-2 top-[calc(50%-28px)] bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+        className="duration-400 absolute right-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
         </svg>
       </button>
 

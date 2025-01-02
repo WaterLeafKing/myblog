@@ -24,16 +24,22 @@ interface Post {
   created_at: string;
 }
 
+interface Comment {
+  id: number;
+  comment: string;
+  created_at: string;
+}
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 export default function Post({ id }: PostProps) {
   const [post, setPost] = useState<Post>();
-  const [comment, setComment] = useState<string>('');
+  const [commentList, setCommentList] = useState<Comment[]>([]);
 
   const fetchPost = async (id: number) => {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
     const { data, error } = await supabase
       .from('Post')
       .select('id, preview_image_url, title, content, created_at')
@@ -47,8 +53,22 @@ export default function Post({ id }: PostProps) {
     }
   };
 
+  const fetchComment = async (id: number) => {
+    const { data, error } = await supabase
+      .from('Comment')
+      .select('id, comment, created_at')
+      .eq('post_id', id);
+
+    if (error) {
+      console.log(error);
+    } else {
+      setCommentList(data);
+    }
+  };
+
   useEffect(() => {
     fetchPost(id);
+    fetchComment(id);
   }, [id]);
 
   return (
@@ -78,8 +98,10 @@ export default function Post({ id }: PostProps) {
       <div className="cursor-pointer">
         <AiOutlineHeart size={24} />
       </div>
-      <CommentInput text={'comment'}/>
-      <CommentCard comment="이곳은 댓글입니다"/>
+      <CommentInput postId={id} />
+      {commentList.map((item, index) => (
+        <CommentCard key={index} comment={item.comment} />
+      ))}
       <div className='my-8'></div>
     </div>
   );

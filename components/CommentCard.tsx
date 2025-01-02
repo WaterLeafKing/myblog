@@ -4,13 +4,13 @@ type CommentCardProps = {
   comment: string;
 };
 
-const CommentCard: FC<CommentCardProps> = ({
-  comment,
-}) => {
+const CommentCard: FC<CommentCardProps> = ({ comment }) => {
   return (
-    <div className="flex my-1">
-      <div className="min-w-[32px] w-14 h-6 bg-gray-200 flex items-center justify-center rounded-lg text-xs shrink-0">나그네</div>
-      <div className="text-xs mx-1 flex-1">{comment}</div>
+    <div className="my-1 flex">
+      <div className="flex h-6 w-14 min-w-[32px] shrink-0 items-center justify-center rounded-lg bg-gray-200 text-sm">
+        나그네
+      </div>
+      <div className="mx-1 flex-1 text-sm">{comment}</div>
     </div>
   );
 };

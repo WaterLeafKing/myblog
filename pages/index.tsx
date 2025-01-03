@@ -98,8 +98,8 @@ export default function Home() {
       </div>
       <div className="flex justify-center font-extralight">
         <div className="flex cursor-pointer text-sm italic hover:text-orange-400">
-          "당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
-          때까지 일을 해야 할 것이다"
+          &ldquo;당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
+          때까지 일을 해야 할 것이다&rdquo;
         </div>
       </div>
       <div className="my-4" />

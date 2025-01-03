@@ -73,12 +73,12 @@ export default function Home() {
       <div className="my-10 flex w-full gap-2">
         <SwipeUI />
         <div>
-          <div className="flex h-12 w-44 items-center justify-center rounded-lg border border-gray-300 hover:cursor-pointer hover:border hover:border-orange-400">
+          <div className="flex h-12 w-44 text-sm items-center justify-center rounded-lg border border-gray-300 hover:cursor-pointer hover:border hover:border-orange-400">
             의견 사서함
           </div>
           <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400">
             <div className="mb-2 w-full flex-col items-center justify-center ">
-              <div className="flex items-center justify-center text-base">
+              <div className="flex items-center justify-center text-sm">
                 이 달의&nbsp;
                 <span className="font-bold text-green-600">책</span>
               </div>
@@ -98,8 +98,8 @@ export default function Home() {
       </div>
       <div className="flex justify-center font-extralight">
         <div className="flex cursor-pointer text-sm italic hover:text-orange-400">
-          당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
-          때까지 일을 해야 할 것이다
+          "당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
+          때까지 일을 해야 할 것이다"
         </div>
       </div>
       <div className="my-4" />

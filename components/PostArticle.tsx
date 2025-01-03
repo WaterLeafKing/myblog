@@ -20,7 +20,7 @@ const PostArticle: FC<PostArticleProps> = ({
       </div>
       <div className="relative flex min-w-0 flex-1 flex-col">
         <div className="flex h-full flex-col">
-          <div className="text-base text-gray-700 hover:underline">{title}</div>
+          <div className="text-base font-bold text-gray-900 hover:underline">{title}</div>
           <div className="flex gap-2 my-2">
           <Tag tag="철학"/>
           <Tag tag="일상"/>
@@ -30,7 +30,7 @@ const PostArticle: FC<PostArticleProps> = ({
       </div>
       <div className="flex w-44 shrink-0 flex-col overflow-hidden">
         <img
-          className="h-28 w-44 rounded-lg object-cover transition-transform duration-1000 ease-in-out lg:hover:scale-110"
+          className="h-28 w-44 rounded-lg object-cover transition-transform duration-800 ease-in-out lg:hover:scale-110"
           src={image}
         />
       </div>

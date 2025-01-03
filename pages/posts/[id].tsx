@@ -76,7 +76,7 @@ export default function Post({ id }: PostProps) {
   return (
     <>
       <div id="test" className="flex-col border rounded-full bg-gray-100 p-2 h-32 hidden lg:block fixed left-[calc((100%-1024px)/2)] top-28 items-center justify-center">
-        <div className="bg-gray-100 w-[3rem] h-[3rem] rounded-full mt-2"><Category title="IT" icon='https://cdn.iconscout.com/icon/free/png-256/free-tesla-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-7-pack-logos-icons-2945257.png?f=webp&w=256'/></div>
+        <div className="bg-gray-100 w-[3rem] h-[3rem] rounded-full mt-2"><Category title={'IT'} icon={'https://cdn.iconscout.com/icon/free/png-256/free-tesla-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-7-pack-logos-icons-2945257.png?f=webp&w=256'}/></div>
         <div className="bg-gray-100 w-[3rem] h-[3rem] rounded-full mt-2 flex items-center justify-center"><BiShareAlt size={24} /></div>
       </div>
       <div className="container mx-auto flex flex-col sm:px-6 md:px-7 px-4 lg:px-8 my-8">

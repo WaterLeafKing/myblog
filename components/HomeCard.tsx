@@ -8,8 +8,8 @@ type HomeCardProps = {
 const HomeCard: FC<HomeCardProps> = ({ imageUrl, title }) => {
   return (
     <div className="relative h-full cursor-pointer">
-      <div className="absolute right-8 top-8 z-10 rounded border border-white p-2 text-sm text-white">
-        today insight
+      <div className="absolute right-8 top-8 z-10 rounded border border-white p-2 px-4 text-sm text-white">
+        New
       </div>
       <div className="absolute bottom-6 left-8 z-10 max-w-[400px] break-keep p-4 text-2xl font-bold text-white">
         {title}

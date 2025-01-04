@@ -16,6 +16,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const SwipeUI: React.FC = () => {
   const [postList, setPostList] = useState<Post[]>([]);
+  const [key, setKey] = useState(0);
 
   const fetchRecentPostList = async () => {
     const { data, error } = await supabase
@@ -47,6 +48,14 @@ const SwipeUI: React.FC = () => {
       });
 
       setPostList(tempList || []);
+      setTimeout(() => {
+        if (containerRef.current) {
+          containerRef.current.scrollTo({
+            left: containerRef.current.clientWidth,
+            behavior: 'auto',
+          });
+        }
+      }, 0);
     }
   };
 
@@ -56,6 +65,7 @@ const SwipeUI: React.FC = () => {
 
   const handleNext = () => {
     if (containerRef.current && !isTransitioning) {
+      setKey((prev) => prev + 1);
       setIsTransitioning(true);
       const newIndex = currentIndex + 1;
       setCurrentIndex(newIndex);
@@ -72,12 +82,13 @@ const SwipeUI: React.FC = () => {
           });
         }
         setIsTransitioning(false);
-      }, 500); // Debounce for 500ms
+      }, 800); // Debounce for 500ms
     }
   };
 
   const handlePrev = () => {
     if (containerRef.current && !isTransitioning) {
+      setKey((prev) => prev + 1);
       setIsTransitioning(true);
       const newIndex = currentIndex - 1;
       setCurrentIndex(newIndex);
@@ -94,7 +105,7 @@ const SwipeUI: React.FC = () => {
           });
         }
         setIsTransitioning(false);
-      }, 500); // Debounce for 500ms
+      }, 800); // Debounce for 500ms
     }
   };
 
@@ -119,15 +130,19 @@ const SwipeUI: React.FC = () => {
       containerRef.current?.removeEventListener('touchstart', handleTouchStart);
   }, []);
 
-  useInterval(() => {
-    handleNext();
-  }, 6000);
+  useInterval(
+    () => {
+      handleNext();
+    },
+    8000,
+    key,
+  );
 
   return (
     <div className="group relative w-3/4">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide, index) => (
-          <div key={index} className="h-72 min-w-full">
+          <div key={index} className={`h-72 min-w-full`}>
             <a href={'/posts/' + slide.id}>
               <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
             </a>

@@ -73,8 +73,13 @@ export default function Home() {
       <div className="my-10 flex w-full gap-2">
         <SwipeUI />
         <div>
-          <div className="flex h-12 w-44 text-sm items-center justify-center rounded-lg border border-gray-300 hover:cursor-pointer hover:border hover:border-orange-400">
-            의견 사서함
+          <div className="flex gap-2">
+            <div className="flex h-12 w-2/3 items-center justify-center rounded-lg border border-gray-300 text-sm hover:cursor-pointer hover:border hover:border-orange-400">
+              의견 사서함
+            </div>
+            <div className="flex h-12 w-1/3 items-center justify-center rounded-lg border border-gray-300 text-sm hover:cursor-pointer hover:border hover:border-orange-400">
+              ?
+            </div>
           </div>
           <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400">
             <div className="mb-2 w-full flex-col items-center justify-center ">
@@ -98,14 +103,14 @@ export default function Home() {
       </div>
       <div className="flex justify-center font-extralight">
         <div className="flex cursor-pointer text-sm italic hover:text-orange-400">
-          &ldquo;당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면 당신은 죽을
-          때까지 일을 해야 할 것이다&rdquo;
+          &ldquo;당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면
+          당신은 죽을 때까지 일을 해야 할 것이다&rdquo;
         </div>
       </div>
       <div className="my-4" />
       <CategoryCardSection categories={CategoryList} />
       <div className="my-4" />
-      <div className="sm:grid-cols-1 md:grid-cols-1 grid w-full gap-1 lg:grid-cols-1">
+      <div className="w-full">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index}>
             <PostArticle
@@ -117,8 +122,7 @@ export default function Home() {
           </a>
         ))}
       </div>
-      <div className="my-8 flex justify-center">about</div>
-      <div className="my-20" />
+      <div className="my-10" />
     </main>
   );
 }

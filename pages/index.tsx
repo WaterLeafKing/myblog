@@ -72,7 +72,7 @@ export default function Home() {
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
       <div className="my-10 flex w-full gap-2">
         <SwipeUI />
-        <div id="help" className="md:block hidden">
+        <div id="help" className="md:block hidden lg:block">
           <div className="flex gap-2">
             <div className="flex h-12 w-2/3 items-center justify-center rounded-lg border border-gray-300 text-sm hover:cursor-pointer hover:border hover:border-orange-400">
               의견 사서함

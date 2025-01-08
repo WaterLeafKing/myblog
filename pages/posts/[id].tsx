@@ -84,7 +84,7 @@ export default function Post({ id }: PostProps) {
       <div className="sm:px-6 md:px-7 container mx-auto my-8 flex flex-col px-4 lg:px-8">
         {post ? (
           <>
-            <div className="my-4 mb-8 text-center text-4xl font-bold">
+            <div className="my-4 mb-8 whitespace-pre-wrap break-keep text-3xl font-bold lg:text-4xl">
               {post.title}
             </div>
             <div className="mb-8 flex-row">

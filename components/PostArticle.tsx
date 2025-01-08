@@ -10,7 +10,7 @@ type PostArticleProps = {
 
 const PostArticle: FC<PostArticleProps> = ({ image, title, category }) => {
   return (
-    <div className="flex h-32">
+    <div className="flex lg:h-32">
       <div className="text-base font-extralight text-gray-500">
         <div>{category} | &nbsp;</div>
       </div>
@@ -26,9 +26,9 @@ const PostArticle: FC<PostArticleProps> = ({ image, title, category }) => {
           </div>
         </div>
       </div>
-      <div className="flex h-28 w-44 shrink-0 flex-col overflow-hidden rounded-lg">
+      <div className="flex h-20 w-28 shrink-0 flex-col overflow-hidden rounded-lg lg:h-28 lg:w-44">
         <img
-          className="duration-800 h-28 w-44 rounded-lg object-cover transition-transform ease-in-out lg:hover:scale-110"
+          className="duration-800 h-20 w-28 rounded-lg object-cover transition-transform ease-in-out lg:h-28 lg:w-44 lg:hover:scale-110"
           src={image}
         />
       </div>

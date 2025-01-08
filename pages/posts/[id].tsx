@@ -80,9 +80,9 @@ export default function Post({ id }: PostProps) {
     <>
       <div
         id="test"
-        className="fixed left-[calc((100%-900px)/2)] top-28 hidden flex items-center justify-center lg:block"
+        className="fixed top-28 left-[calc((100%-900px)/2)] hidden items-center justify-center lg:block"
       >
-        <div className="flex size-12 items-center justify-center rounded-full border border-gray-300 hover:border-gray-600 hover:cursor-pointer">
+        <div className="hover:cursor-pointer hover:border-gray-600 flex size-12 items-center justify-center rounded-full border border-gray-300">
           <BiShareAlt size={24} />
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function Post({ id }: PostProps) {
             <div className="mb-4"></div>
             <img
               src={post.preview_image_url}
-              alt={post.title}
+              alt={`Preview image for ${post.title}`}
               className="rounded-lg"
             />
             <div className="my-4">

@@ -23,7 +23,7 @@ interface Comment {
   id: number;
   comment: string;
   created_at: string;
-  sub_id : number;
+  sub_id: number;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -75,16 +75,18 @@ export default function Post({ id }: PostProps) {
     <>
       <div
         id="test"
-        className="fixed top-28 left-[calc((100%-900px)/2)] hidden items-center justify-center lg:block"
+        className="fixed left-[calc((100%-900px)/2)] top-28 hidden items-center justify-center lg:block"
       >
-        <div className="hover:cursor-pointer hover:border-gray-600 flex size-12 items-center justify-center rounded-full border border-gray-300">
+        <div className="flex size-12 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer hover:border-gray-600">
           <BiShareAlt size={24} />
         </div>
       </div>
       <div className="sm:px-6 md:px-7 container mx-auto my-8 flex flex-col px-4 lg:px-8">
         {post ? (
           <>
-            <div className="my-4 mb-8 text-4xl font-bold">{post.title}</div>
+            <div className="my-4 mb-8 text-center text-4xl font-bold">
+              {post.title}
+            </div>
             <div className="mb-8 flex-row">
               <Tag tag="IT" />
               <Tag tag="stock" />
@@ -104,6 +106,7 @@ export default function Post({ id }: PostProps) {
         ) : (
           <p>Loading...</p>
         )}
+        <div className="mt-12 font-bold">댓글 {commentList.length}개</div>
         <div className="my-4">
           <CommentInput postId={id} onAddComment={handleAddComment} />
         </div>

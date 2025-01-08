@@ -139,7 +139,7 @@ const SwipeUI: React.FC = () => {
   );
 
   return (
-    <div className="group relative w-3/4">
+    <div className="group relative lg:w-3/4">
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide, index) => (
           <div key={index} className={`h-72 min-w-full`}>

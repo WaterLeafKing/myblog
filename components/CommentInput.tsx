@@ -5,7 +5,7 @@ interface Comment {
   id: number;
   comment: string;
   created_at: string;
-  sub_id:number;
+  sub_id: number;
 }
 
 interface CommentInputProps {
@@ -47,7 +47,6 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
       setComment('');
       console.log(data);
       onAddComment(data[0]);
-      alert('댓글이 성공적으로 작성되었습니다.');
     } catch (error) {
       console.error('Error inserting post:', error);
       alert('댓글 작성 중 오류가 발생했습니다.');

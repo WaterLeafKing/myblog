@@ -26,14 +26,14 @@ const CommentCard: FC<CommentCardProps> = ({ comment, comment_created_at }) => {
   return (
     <div className="my-2 flex-col">
       <div className="flex items-end">
-        <div className="flex h-6 w-14 min-w-[32px] shrink-0 items-center justify-center rounded-lg bg-gray-200 text-sm">
+        <div className="flex h-6 w-14 min-w-[32px] shrink-0 items-center font-bold justify-center rounded-lg bg-gray-200 text-sm">
           나그네
         </div>
-        <div className="ml-2 text-xs text-gray-400">
+        <div className="ml-2 text-xs font-extralight">
           {formatDate(comment_created_at)}
         </div>
       </div>
-      <div className="mx-1 flex-1 text-sm">{comment}</div>
+      <div className="flex-1 text-sm my-1">{comment}</div>
       <CommentReplyChecker />
     </div>
   );

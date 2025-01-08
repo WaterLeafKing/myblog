@@ -1,6 +1,7 @@
 import Category from '@/components/Category';
 import CommentCard from '@/components/CommentCard';
 import CommentInput from '@/components/CommentInput';
+import { MarkdownViewer } from '@/components/Markdown';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
@@ -79,17 +80,9 @@ export default function Post({ id }: PostProps) {
     <>
       <div
         id="test"
-        className="fixed left-[calc((100%-1024px)/2)] top-28 hidden h-32 flex-col items-center justify-center rounded-full border bg-gray-100 p-2 lg:block"
+        className="fixed left-[calc((100%-900px)/2)] top-28 hidden flex items-center justify-center lg:block"
       >
-        <div className="mt-2 size-12 rounded-full bg-gray-100">
-          <Category
-            title={'IT'}
-            icon={
-              'https://cdn.iconscout.com/icon/free/png-256/free-tesla-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-vol-7-pack-logos-icons-2945257.png?f=webp&w=256'
-            }
-          />
-        </div>
-        <div className="mt-2 flex size-12 items-center justify-center rounded-full bg-gray-100">
+        <div className="flex size-12 items-center justify-center rounded-full border border-gray-300 hover:border-gray-600 hover:cursor-pointer">
           <BiShareAlt size={24} />
         </div>
       </div>
@@ -110,7 +103,7 @@ export default function Post({ id }: PostProps) {
               className="rounded-lg"
             />
             <div className="my-4">
-              <MDViewer source={post.content} />
+              <MarkdownViewer source={post.content} />
             </div>
           </>
         ) : (

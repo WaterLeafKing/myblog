@@ -1,17 +1,11 @@
-import Category from '@/components/Category';
 import CommentCard from '@/components/CommentCard';
 import CommentInput from '@/components/CommentInput';
 import { MarkdownViewer } from '@/components/Markdown';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
-import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { BiShareAlt } from 'react-icons/bi';
-
-const MDViewer = dynamic(() => import('@uiw/react-markdown-preview'), {
-  ssr: false,
-});
 
 type PostProps = {
   id: number;
@@ -29,6 +23,7 @@ interface Comment {
   id: number;
   comment: string;
   created_at: string;
+  sub_id : number;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -57,7 +52,7 @@ export default function Post({ id }: PostProps) {
   const fetchComment = async (id: number) => {
     const { data, error } = await supabase
       .from('Comment')
-      .select('id, comment, created_at')
+      .select('id, comment, created_at, sub_id')
       .eq('post_id', id);
 
     if (error) {
@@ -117,6 +112,7 @@ export default function Post({ id }: PostProps) {
             key={index}
             comment={item.comment}
             comment_created_at={item.created_at}
+            sub_id={item.sub_id}
           />
         ))}
         <div className="my-8"></div>

@@ -5,6 +5,7 @@ interface Comment {
   id: number;
   comment: string;
   created_at: string;
+  sub_id:number;
 }
 
 interface CommentInputProps {

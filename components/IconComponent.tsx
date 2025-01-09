@@ -20,10 +20,10 @@ const IconButton = <Component extends ElementType = 'button'>({
   return createElement(
     component ?? 'button',
     {
-      className: cn('p-1.5 lg:p-2', className),
+      className: cn('p-0.5 lg:p-1', className),
       ...props,
     },
-    <Icon className={cn('size-5 translate-all lg:size-6', iconClassName)} />,
+    <Icon className={cn('size-4 translate-all lg:size-5', iconClassName)} />,
   );
 };
 

@@ -14,7 +14,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export default function Home() {
+export default function Write() {
   const [title, setTitle] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
@@ -55,6 +55,13 @@ export default function Home() {
     // Validate required fields
     if (!title || !content || !thumbnail) {
       alert('제목과 썸네일, 내용을 입력해주세요.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Validate required fields
+    if (selectedCategory == null) {
+      alert('카테고리를 선택해주세요.');
       setIsSubmitting(false);
       return;
     }
@@ -105,18 +112,17 @@ export default function Home() {
             className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
             onChange={(e) => setThumbnail(e.target.value || '')}
           />
-          <input
+          {/* <input
             type="file"
             accept="image/*"
             className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
-          />
+          /> */}
           <ReactSelect
             options={categoryOptions}
             placeholder="카테고리"
             isMulti={false}
             onChange={(option) => setSelectedCategory(option?.value || null)}
           />
-          <ReactSelect options={[]} placeholder="태그" isMulti />
           <MarkdownEditor
             height={500}
             value={content}

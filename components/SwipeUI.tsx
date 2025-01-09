@@ -153,7 +153,7 @@ const SwipeUI: React.FC = () => {
       {/* Navigation Buttons */}
       <button
         onClick={handlePrev}
-        className="duration-400 absolute left-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+        className="duration-400 absolute left-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-60"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +172,7 @@ const SwipeUI: React.FC = () => {
       </button>
       <button
         onClick={handleNext}
-        className="duration-400 absolute right-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-100"
+        className="duration-400 absolute right-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-60"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

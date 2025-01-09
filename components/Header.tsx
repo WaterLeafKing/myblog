@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { AiOutlineClose, AiOutlineMenu, AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
 import IconButton from './IconComponent';
 
 type HeaderProps = {
@@ -15,10 +15,10 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
         onClick={() => setIsSidebarOpen((toggle) => !toggle)}
         Icon={isSidebarOpen ? AiOutlineClose : AiOutlineMenu}
       /> */}
-      <div></div>
+      <div className="w-6"></div>
       <Link href="/">
         <h1 className="text-3xl font-thin text-slate-600 lg:text-3xl">
-          N e r d &nbsp;&nbsp; I n s i g h t
+          ㄴㄷ&nbsp;<span className="font-bold">ㅇㅅㅇ</span>ㅌ
         </h1>
       </Link>
       <IconButton Icon={AiOutlineSearch} component={Link} href="/search" />

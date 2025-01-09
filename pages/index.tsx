@@ -1,8 +1,12 @@
 import CategoryCardSection from '@/components/CategoryCardSection';
+import IconButton from '@/components/IconComponent';
 import PostArticle from '@/components/PostArticle';
+import QuoteCard from '@/components/QuoteCard';
 import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
+import { BsChatQuote } from 'react-icons/bs';
+import { CgProfile } from 'react-icons/cg';
 
 interface Post {
   id: number;
@@ -11,11 +15,19 @@ interface Post {
   created_at: string;
   category: string;
 }
+
 interface Category {
   id: number;
   title: string;
   icon: string;
 }
+
+interface Quote {
+  id:number;
+  quote: string;
+  speaker: string;
+};
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
@@ -24,8 +36,9 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
   const [CategoryList, setCategoryList] = useState<Category[]>([]);
-
-  const testFetch = async () => {
+  const [quote, setQuote] = useState<Quote>({id:-1, quote:'', speaker:''});
+  
+  const fetchPostList = async () => {
     const { data, error } = await supabase
       .from('Post')
       .select(
@@ -63,22 +76,43 @@ export default function Home() {
     }
   };
 
+  const fetchQuote = async () => {
+    const { data, error } = await supabase
+      .rpc('get_random_quote');
+
+    if (error) {
+      console.error('Supabase error:', error);
+    } else {
+      if (!data || data.length === 0) {
+        console.log('No quote found in the database');
+      }
+      console.log(data);
+      setQuote(data[0]);
+    }
+  };
+
   useEffect(() => {
-    testFetch();
+    fetchPostList();
     fetchCategoryList();
+    fetchQuote();
   }, []);
+
+  useEffect(() => {
+    console.log(quote)
+  }, [quote]);
 
   return (
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
-      <div className="my-10 flex w-full gap-2">
+      <div className="mt-8 mb-4 flex w-full gap-2">
         <SwipeUI />
         <div id="help" className="md:block hidden lg:block">
           <div className="flex gap-2">
-            <div className="flex h-12 w-2/3 items-center justify-center rounded-lg border border-gray-300 text-sm hover:cursor-pointer hover:border hover:border-orange-400">
-              의견 사서함
-            </div>
-            <div className="flex h-12 w-1/3 items-center justify-center rounded-lg border border-gray-300 text-sm hover:cursor-pointer hover:border hover:border-orange-400">
-              ?
+              <a href={'/opinion'} className='flex h-12 w-2/3 text-xs items-center justify-center rounded-lg border border-gray-300 text-gray-400 hover:text-orange-400 hover:cursor-pointer hover:border hover:border-orange-400'>
+                <IconButton Icon={BsChatQuote} />
+                <div>의견보내기</div>
+              </a>
+            <div className="flex h-12 w-1/3 text-xs items-center justify-center rounded-lg border border-gray-300 text-gray-400 hover:text-orange-400 hover:cursor-pointer hover:border hover:border-orange-400">
+              <IconButton Icon={CgProfile} />
             </div>
           </div>
           <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400">
@@ -103,15 +137,14 @@ export default function Home() {
       </div>
       <div className="flex justify-center font-extralight">
         <div className="flex cursor-pointer text-sm italic hover:text-orange-400">
-          &ldquo;당신이 잠자는 동안에도 돈이 들어오는 방법을 찾지 못한다면
-          당신은 죽을 때까지 일을 해야 할 것이다&rdquo;
-        </div>
+        <QuoteCard quote={quote.quote} speaker={quote.speaker} />
+           </div>
       </div>
-      <div className="my-4" />
+      <div className="my-2" />
       <div className="hidden lg:block">
         <CategoryCardSection categories={CategoryList} />
       </div>
-      <div className="my-4" />
+      <div className="my-2" />
       <div className="w-full">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index}>

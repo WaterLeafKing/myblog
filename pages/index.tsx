@@ -23,10 +23,10 @@ interface Category {
 }
 
 interface Quote {
-  id:number;
+  id: number;
   quote: string;
   speaker: string;
-};
+}
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
@@ -36,8 +36,8 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
   const [CategoryList, setCategoryList] = useState<Category[]>([]);
-  const [quote, setQuote] = useState<Quote>({id:-1, quote:'', speaker:''});
-  
+  const [quote, setQuote] = useState<Quote>({ id: -1, quote: '', speaker: '' });
+
   const fetchPostList = async () => {
     const { data, error } = await supabase
       .from('Post')
@@ -77,8 +77,7 @@ export default function Home() {
   };
 
   const fetchQuote = async () => {
-    const { data, error } = await supabase
-      .rpc('get_random_quote');
+    const { data, error } = await supabase.rpc('get_random_quote');
 
     if (error) {
       console.error('Supabase error:', error);
@@ -98,20 +97,23 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(quote)
+    console.log(quote);
   }, [quote]);
 
   return (
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
-      <div className="mt-8 mb-4 flex w-full gap-2">
+      <div className="mb-4 mt-8 flex w-full gap-2">
         <SwipeUI />
         <div id="help" className="md:block hidden lg:block">
           <div className="flex gap-2">
-              <a href={'/opinion'} className='flex h-12 w-2/3 text-xs items-center justify-center rounded-lg border border-gray-300 text-gray-400 hover:text-orange-400 hover:cursor-pointer hover:border hover:border-orange-400'>
-                <IconButton Icon={BsChatQuote} />
-                <div>의견보내기</div>
-              </a>
-            <div className="flex h-12 w-1/3 text-xs items-center justify-center rounded-lg border border-gray-300 text-gray-400 hover:text-orange-400 hover:cursor-pointer hover:border hover:border-orange-400">
+            <a
+              href={'/opinion'}
+              className="flex h-12 w-2/3 items-center justify-center rounded-lg border border-gray-300 text-xs text-gray-400 hover:cursor-pointer hover:border hover:border-orange-400 hover:text-orange-400"
+            >
+              <IconButton Icon={BsChatQuote} />
+              <div>의견보내기</div>
+            </a>
+            <div className="flex h-12 w-1/3 items-center justify-center rounded-lg border border-gray-300 text-xs text-gray-400 hover:cursor-pointer hover:border hover:border-orange-400 hover:text-orange-400">
               <IconButton Icon={CgProfile} />
             </div>
           </div>
@@ -136,9 +138,9 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center font-extralight">
-        <div className="flex cursor-pointer text-sm italic hover:text-orange-400">
-        <QuoteCard quote={quote.quote} speaker={quote.speaker} />
-           </div>
+        <div className="flex text-sm italic">
+          <QuoteCard quote={quote.quote} speaker={quote.speaker} />
+        </div>
       </div>
       <div className="my-2" />
       <div className="hidden lg:block">

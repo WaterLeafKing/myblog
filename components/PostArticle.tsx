@@ -19,7 +19,7 @@ const PostArticle: FC<PostArticleProps> = ({ image, title, category }) => {
       </div>
       <div className="relative flex min-w-0 flex-1 flex-col">
         <div className="flex h-full flex-col">
-          <div className="text-sm font-extralight text-gray-500">
+          <div className="text-xs font-extralight text-gray-600">
             {category}
           </div>
           <div className="text-base font-bold text-gray-900 hover:text-orange-400">

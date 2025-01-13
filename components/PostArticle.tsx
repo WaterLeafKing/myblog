@@ -12,9 +12,9 @@ type PostArticleProps = {
 const PostArticle: FC<PostArticleProps> = ({ image, title, category, tags }) => {
   return (
     <div className="mb-2 flex rounded-lg">
-      <div className="mr-2 flex h-20 w-28 shrink-0 flex-col overflow-hidden rounded-lg lg:h-24 lg:w-36">
+      <div className="mr-2 flex h-16 w-24 shrink-0 flex-col overflow-hidden rounded-lg lg:h-24 lg:w-36">
         <img
-          className="duration-800 h-20 w-28 rounded-lg object-cover transition-transform ease-in-out lg:h-24 lg:w-36 lg:hover:scale-110"
+          className="duration-800 h-16 w-24 rounded-lg object-cover transition-transform ease-in-out lg:h-24 lg:w-36 lg:hover:scale-110"
           src={image}
         />
       </div>
@@ -23,7 +23,7 @@ const PostArticle: FC<PostArticleProps> = ({ image, title, category, tags }) => 
           <div className="text-xs font-extralight text-gray-600">
             {category}
           </div>
-          <div className="text-base font-bold text-gray-900 hover:text-orange-400">
+          <div className="text-xs lg:text-base font-bold text-gray-900 hover:text-orange-400">
             {title}
           </div>
           <div className="my-2 flex gap-2">

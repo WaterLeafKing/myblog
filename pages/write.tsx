@@ -18,8 +18,8 @@ export default function Write() {
   const [title, setTitle] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
-  const [CategoryList, setCategoryList] = useState<Category[]>([]);  
-  const [tagLIst, setTagList] = useState<string[]>([]);
+  const [categoryList, setCategoryList] = useState<Category[]>([]);  
+  const [tagList, setTagList] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Write() {
   }, []);
 
   // Transform CategoryList into ReactSelect options format
-  const categoryOptions = CategoryList.map((category) => ({
+  const categoryOptions = categoryList.map((category) => ({
     value: category.id,
     label: category.title,
   }));
@@ -68,26 +68,78 @@ export default function Write() {
     }
 
     try {
+      console.log('Selected Category ID:', selectedCategory); // Debug log
+
+      const { data: categoryExists, error: categoryError } = await supabase
+        .from('Category')
+        .select('id')
+        .eq('id', selectedCategory)
+        .single();
+
+      console.log('Category Check Result:', { categoryExists, categoryError }); // Debug log
+
+      if (!categoryExists) {
+        alert('선택한 카테고리가 존재하지 않습니다.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      // 1. Insert post first to get the post_id
       const postData = {
         title,
-        preview_image_url:thumbnail,
+        preview_image_url: thumbnail,
         content,
-        ...(selectedCategory && { categoryId: selectedCategory }), // Only include categoryId if selected
+        category_id : selectedCategory,
       };
 
-      const { data, error } = await supabase
+      const { data: insertedPost, error: postError } = await supabase
         .from('Post')
         .insert([postData])
         .select();
 
-      console.log(error);
+      if (postError) throw postError;
+      
+      const postId = insertedPost[0].id;
 
-      if (error) throw error;
+      // 2. Process each tag
+      for (const tagName of tagList) {
+        // Check if tag exists
+        let { data: existingTag } = await supabase
+          .from('Tag')
+          .select('id')
+          .eq('name', tagName)
+          .single();
+
+        let tagId;
+        
+        if (!existingTag) {
+          // Insert new tag if it doesn't exist
+          const { data: newTag, error: tagError } = await supabase
+            .from('Tag')
+            .insert([{ name: tagName }])
+            .select()
+            .single();
+            
+          if (tagError) throw tagError;
+          tagId = newTag.id;
+        } else {
+          tagId = existingTag.id;
+        }
+
+        // Insert PostTag relation
+        const { error: postTagError } = await supabase
+          .from('PostTag')
+          .insert([{ post_id: postId, tag_id: tagId }]);
+
+        if (postTagError) throw postTagError;
+      }
 
       // Reset form after successful submission
       setTitle('');
       setContent('');
+      setThumbnail('');
       setSelectedCategory(null);
+      setTagList([]);
       alert('게시글이 성공적으로 작성되었습니다.');
     } catch (error) {
       console.error('Error inserting post:', error);
@@ -98,7 +150,12 @@ export default function Write() {
   };
 
   const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const tags = e.target.value.split('#').filter(tag=>tag.trim() !== '').map(tag=>tag.trim())
+    const inputValue = e.target.value.trim();
+    const tags = inputValue
+      .split('#')
+      .filter(tag => tag.trim() !== '')
+      .map(tag => tag.trim())
+      .filter((tag, index, self) => self.indexOf(tag) === index); // Remove duplicates
     setTagList(tags);
   };
 
@@ -136,9 +193,12 @@ export default function Write() {
             onChange={handleTagChange}
           />
           <div className="flex gap-2">
-            {tagLIst.map(
-              (tag, index)=>(<div key={index}className="text-sm bg-orange-200 rounded-lg px-2 py-1">{tag}</div>))}
-        </div>
+            {tagList.map((tag, index) => (
+              <div key={index} className="text-sm bg-orange-200 rounded-lg px-2 py-1">
+                {tag}
+              </div>
+            ))}
+          </div>
         </div>
         <button
           type="submit"

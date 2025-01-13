@@ -1,3 +1,4 @@
+import Category from '@/components/Category';
 import CategoryCardSection from '@/components/CategoryCardSection';
 import IconButton from '@/components/IconComponent';
 import PostArticle from '@/components/PostArticle';
@@ -13,7 +14,8 @@ interface Post {
   preview_image_url: string;
   title: string;
   created_at: string;
-  category: string;
+  category_id: number;
+  category_title: string;
   tags: { tag_id: number; name: string; }[];
 }
 
@@ -27,6 +29,23 @@ interface Quote {
   id: number;
   quote: string;
   speaker: string;
+}
+
+interface PostWithJoins {
+  id: number;
+  preview_image_url: string;
+  title: string;
+  created_at: string;
+  category_id: number;
+  Category: {
+    title: string;
+  };
+  PostTag: {
+    tag_id: number;
+    Tag: {
+      name: string;
+    };
+  }[];
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -47,35 +66,34 @@ export default function Home() {
         preview_image_url,
         title,
         created_at,
-        category,
+        category_id,
+        Category:category_id (title),
         PostTag (
           tag_id,
           Tag (name)
         )
       `)
       .order('created_at', { ascending: false })
-      .range(3, 13);
+      .range(3, 13)
+      .returns<PostWithJoins[]>();
 
     if (error) {
       console.log(error);
     } else {
-      console.log(data);
-      console.log('-----------------');
-
       const transformedData = data?.map(post => ({
         id: post.id,
         preview_image_url: post.preview_image_url,
         title: post.title,
         created_at: post.created_at,
-        category: post.category,
-        tags: post.PostTag.map((pt: any) => ({
+        category_id: post.category_id,
+        category_title: post.Category.title,
+        tags: post.PostTag.map((pt) => ({
           tag_id: pt.tag_id,
           name: pt.Tag.name
         }))
       })) || [];
-      console.log(transformedData);
 
-      setPostList(transformedData);
+      setPostList(transformedData as Post[]);
     }
   };
 
@@ -167,12 +185,12 @@ export default function Home() {
       <div className="my-2" />
       <div className="w-full">
         {postList.map((item, index) => (
-          <a href={'/posts/' + item.id} key={index}>
+          <a href={'/posts/' + item.id} key={index} target='_blank'>
             <PostArticle
               image={item.preview_image_url}
               title={item.title}
               created_at={new Date(item.created_at).toISOString().split('T')[0]}
-              category={item.category}
+              category={item.category_title}
               tags={item.tags}
             />
           </a>

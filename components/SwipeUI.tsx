@@ -48,14 +48,14 @@ const SwipeUI: React.FC = () => {
       });
 
       setPostList(tempList || []);
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         if (containerRef.current) {
           containerRef.current.scrollTo({
             left: containerRef.current.clientWidth,
             behavior: 'auto',
           });
         }
-      }, 0);
+      });
     }
   };
 
@@ -74,15 +74,15 @@ const SwipeUI: React.FC = () => {
         behavior: 'smooth',
       });
       setTimeout(() => {
-        if (newIndex === postList.length - 1) {
-          setCurrentIndex(1); // Jump to the first actual slide
-          containerRef.current!.scrollTo({
-            left: containerRef.current!.clientWidth,
+        if (newIndex === postList.length - 1 && containerRef.current) {
+          setCurrentIndex(1);
+          containerRef.current.scrollTo({
+            left: containerRef.current.clientWidth,
             behavior: 'auto',
           });
         }
         setIsTransitioning(false);
-      }, 800); // Debounce for 500ms
+      }, 800);
     }
   };
 
@@ -97,15 +97,15 @@ const SwipeUI: React.FC = () => {
         behavior: 'smooth',
       });
       setTimeout(() => {
-        if (newIndex === 0) {
-          setCurrentIndex(postList.length - 2); // Jump to the last actual slide
-          containerRef.current!.scrollTo({
-            left: containerRef.current!.clientWidth * (postList.length - 2),
+        if (newIndex === 0 && containerRef.current) {
+          setCurrentIndex(postList.length - 2);
+          containerRef.current.scrollTo({
+            left: containerRef.current.clientWidth * (postList.length - 2),
             behavior: 'auto',
           });
         }
         setIsTransitioning(false);
-      }, 800); // Debounce for 500ms
+      }, 800);
     }
   };
 
@@ -143,7 +143,7 @@ const SwipeUI: React.FC = () => {
       <div ref={containerRef} className="flex overflow-hidden rounded-lg">
         {postList.map((slide, index) => (
           <div key={index} className={`h-72 min-w-full`}>
-            <a href={'/posts/' + slide.id}>
+            <a href={'/posts/' + slide.id} target='_blank'>
               <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
             </a>
           </div>

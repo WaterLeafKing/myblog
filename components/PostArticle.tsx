@@ -10,8 +10,6 @@ type PostArticleProps = {
 };
 
 const PostArticle: FC<PostArticleProps> = ({ image, title, category, tags }) => {
- console.log(tags)
- 
   return (
     <div className="mb-2 flex rounded-lg">
       <div className="mr-2 flex h-20 w-28 shrink-0 flex-col overflow-hidden rounded-lg lg:h-24 lg:w-36">

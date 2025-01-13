@@ -11,10 +11,6 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
   return (
     <header className="flex h-16 items-center justify-between border-b px-4 lg:px-10">
-      {/* <IconButton
-        onClick={() => setIsSidebarOpen((toggle) => !toggle)}
-        Icon={isSidebarOpen ? AiOutlineClose : AiOutlineMenu}
-      /> */}
       <div className="w-6"></div>
       <Link href="/">
         <h1 className="text-3xl font-thin text-slate-600 lg:text-3xl">

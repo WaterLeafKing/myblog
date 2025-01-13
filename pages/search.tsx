@@ -117,7 +117,7 @@ export default function Search() {
           </button>
         </div>
         <div className='text-xs my-4'>포스트 {postList.length} 건</div>
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index} target='_blank' >
             <PostArticle

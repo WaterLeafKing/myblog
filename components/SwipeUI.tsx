@@ -7,6 +7,19 @@ interface Post {
   id: number;
   text: string;
   imageUrl: string;
+  category_id: number;
+  category_title: string;
+}
+
+interface PostWithJoins {
+  id: number;
+  preview_image_url: string;
+  title: string;
+  created_at: string;
+  category_id: number;
+  Category: {
+    title: string;
+  };
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -21,30 +34,56 @@ const SwipeUI: React.FC = () => {
   const fetchRecentPostList = async () => {
     const { data, error } = await supabase
       .from('Post')
-      .select('id, preview_image_url, title, created_at, content')
+      .select(`
+        id
+        , preview_image_url
+        , title
+        , created_at
+        , content
+        , category_id
+        , Category:category_id (title)
+        `)
       .limit(3)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false }).returns<PostWithJoins[]>();
 
     if (error) {
       console.log(error);
     } else {
-      let tempList: { id: number; text: string; imageUrl: string }[] = [];
+
+      const transformedData = data?.map(post => ({
+        id: post.id,
+        preview_image_url: post.preview_image_url,
+        title: post.title,
+        created_at: post.created_at,
+        category_id: post.category_id,
+        category_title: post.Category.title,        
+      })) || [];
+
+      let tempList: { id: number; text: string; imageUrl: string; 
+        category_id: number;
+        category_title: string; }[] = [];
       tempList.push({
-        id: data[2].id,
-        text: data[2].title,
-        imageUrl: data[2].preview_image_url,
+        id: transformedData[2].id,
+        text: transformedData[2].title,
+        imageUrl: transformedData[2].preview_image_url,
+        category_id:transformedData[2].category_id,
+        category_title:transformedData[2].category_title
       });
-      data.map((item, index) => {
+      transformedData.map((item, index) => {
         tempList.push({
           id: item.id,
           text: item.title,
           imageUrl: item.preview_image_url,
+          category_id:item.category_id,
+          category_title:item.category_title
         });
       });
       tempList.push({
-        id: data[0].id,
-        text: data[0].title,
-        imageUrl: data[0].preview_image_url,
+        id: transformedData[0].id,
+        text: transformedData[0].title,
+        imageUrl: transformedData[0].preview_image_url,
+        category_id:transformedData[0].category_id,
+        category_title:transformedData[0].category_title
       });
 
       setPostList(tempList || []);
@@ -144,13 +183,12 @@ const SwipeUI: React.FC = () => {
         {postList.map((slide, index) => (
           <div key={index} className={`h-72 min-w-full`}>
             <a href={'/posts/' + slide.id} target='_blank'>
-              <HomeCard title={slide.text} imageUrl={slide.imageUrl} />
+              <HomeCard title={slide.text} imageUrl={slide.imageUrl} category_title={slide.category_title} />
             </a>
           </div>
         ))}
       </div>
 
-      {/* Navigation Buttons */}
       <button
         onClick={handlePrev}
         className="duration-400 absolute left-2 top-[calc(50%-28px)] rounded-full bg-white/80 p-2 opacity-0 transition-opacity group-hover:opacity-60"

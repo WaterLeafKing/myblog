@@ -17,6 +17,7 @@ interface Post {
   title: string;
   content: string;
   created_at: string;
+  tags: { tag_id: number; name: string; }[];
 }
 
 interface Comment {
@@ -38,14 +39,30 @@ export default function Post({ id }: PostProps) {
   const fetchPost = async (id: number) => {
     const { data, error } = await supabase
       .from('Post')
-      .select('id, preview_image_url, title, content, created_at')
+      .select(`id, preview_image_url, title, content, created_at, PostTag (
+          tag_id,
+          Tag (name)
+        )`)
       .eq('id', id)
       .single();
 
     if (error) {
       console.log(error);
     } else {
-      setPost(data);
+      const transformedData = {
+        id: data.id,
+        preview_image_url: data.preview_image_url,
+        title: data.title,
+        content: data.content,
+        created_at: data.created_at,
+        tags: data.PostTag.map((pt: any) => ({
+          tag_id: pt.tag_id,
+          name: pt.Tag.name
+        }))
+      } || [];
+      console.log(transformedData);
+
+      setPost(transformedData);
     }
   };
 
@@ -88,10 +105,7 @@ export default function Post({ id }: PostProps) {
               {post.title}
             </div>
             <div className="mb-8 flex-row">
-              <Tag tag="IT" />
-              <Tag tag="stock" />
-              <Tag tag="travel" />
-              <Tag tag="space" />
+              {post.tags.map((item,index)=>(<Tag key={index} tag={item.name}/>))}
             </div>
             <div className="mb-4"></div>
             <img

@@ -18,7 +18,8 @@ export default function Write() {
   const [title, setTitle] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
-  const [CategoryList, setCategoryList] = useState<Category[]>([]);
+  const [CategoryList, setCategoryList] = useState<Category[]>([]);  
+  const [tagLIst, setTagList] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -96,6 +97,11 @@ export default function Write() {
     }
   };
 
+  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tags = e.target.value.split('#').filter(tag=>tag.trim() !== '').map(tag=>tag.trim())
+    setTagList(tags);
+  };
+
   return (
     <main className="mx-auto flex flex-col px-4 pt-12">
       <form onSubmit={handleSubmit}>
@@ -112,22 +118,27 @@ export default function Write() {
             className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
             onChange={(e) => setThumbnail(e.target.value || '')}
           />
-          {/* <input
-            type="file"
-            accept="image/*"
-            className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
-          /> */}
+          <MarkdownEditor
+            height={500}
+            value={content}
+            onChange={(value) => setContent(value || '')}
+          />          
           <ReactSelect
             options={categoryOptions}
             placeholder="카테고리"
             isMulti={false}
             onChange={(option) => setSelectedCategory(option?.value || null)}
           />
-          <MarkdownEditor
-            height={500}
-            value={content}
-            onChange={(value) => setContent(value || '')}
+          <input
+            type="text"
+            placeholder="태그"
+            className="rounded-md border border-gray-300 p-2 transition-all hover:border-gray-400"
+            onChange={handleTagChange}
           />
+          <div className="flex gap-2">
+            {tagLIst.map(
+              tag=>(<div className="text-sm bg-orange-200 rounded-lg px-2 py-1">{tag}</div>))}
+        </div>
         </div>
         <button
           type="submit"

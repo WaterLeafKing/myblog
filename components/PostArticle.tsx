@@ -6,9 +6,12 @@ type PostArticleProps = {
   title: string;
   created_at: string;
   category: string;
+  tags: { tag_id: number; name: string }[];
 };
 
-const PostArticle: FC<PostArticleProps> = ({ image, title, category }) => {
+const PostArticle: FC<PostArticleProps> = ({ image, title, category, tags }) => {
+ console.log(tags)
+ 
   return (
     <div className="mb-2 flex rounded-lg">
       <div className="mr-2 flex h-20 w-28 shrink-0 flex-col overflow-hidden rounded-lg lg:h-24 lg:w-36">
@@ -26,9 +29,7 @@ const PostArticle: FC<PostArticleProps> = ({ image, title, category }) => {
             {title}
           </div>
           <div className="my-2 flex gap-2">
-            <Tag tag="철학" />
-            <Tag tag="일상" />
-            <Tag tag="사유" />
+            {tags.map((item, index)=>(<Tag key={index} tag={item.name} />))}
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ interface Post {
   title: string;
   created_at: string;
   category: string;
+  tags: { tag_id: number; name: string; }[];
 }
 
 interface Category {
@@ -41,23 +42,40 @@ export default function Home() {
   const fetchPostList = async () => {
     const { data, error } = await supabase
       .from('Post')
-      .select(
-        `
+      .select(`
         id,
         preview_image_url,
         title,
         created_at,
-        content,
-        category
-      `,
-      )
+        category,
+        PostTag (
+          tag_id,
+          Tag (name)
+        )
+      `)
       .order('created_at', { ascending: false })
       .range(3, 13);
 
     if (error) {
       console.log(error);
     } else {
-      setPostList(data || []);
+      console.log(data);
+      console.log('-----------------');
+
+      const transformedData = data?.map(post => ({
+        id: post.id,
+        preview_image_url: post.preview_image_url,
+        title: post.title,
+        created_at: post.created_at,
+        category: post.category,
+        tags: post.PostTag.map((pt: any) => ({
+          tag_id: pt.tag_id,
+          name: pt.Tag.name
+        }))
+      })) || [];
+      console.log(transformedData);
+
+      setPostList(transformedData);
     }
   };
 
@@ -155,6 +173,7 @@ export default function Home() {
               title={item.title}
               created_at={new Date(item.created_at).toISOString().split('T')[0]}
               category={item.category}
+              tags={item.tags}
             />
           </a>
         ))}

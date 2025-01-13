@@ -16,7 +16,7 @@ interface Post {
   created_at: string;
   category_id: number;
   category_title: string;
-  tags: { tag_id: number; name: string; }[];
+  tags: { tag_id: number; name: string }[];
 }
 
 interface Category {
@@ -61,7 +61,8 @@ export default function Home() {
   const fetchPostList = async () => {
     const { data, error } = await supabase
       .from('Post')
-      .select(`
+      .select(
+        `
         id,
         preview_image_url,
         title,
@@ -72,7 +73,8 @@ export default function Home() {
           tag_id,
           Tag (name)
         )
-      `)
+      `,
+      )
       .order('created_at', { ascending: false })
       .range(3, 13)
       .returns<PostWithJoins[]>();
@@ -80,18 +82,19 @@ export default function Home() {
     if (error) {
       console.log(error);
     } else {
-      const transformedData = data?.map(post => ({
-        id: post.id,
-        preview_image_url: post.preview_image_url,
-        title: post.title,
-        created_at: post.created_at,
-        category_id: post.category_id,
-        category_title: post.Category.title,
-        tags: post.PostTag.map((pt) => ({
-          tag_id: pt.tag_id,
-          name: pt.Tag.name
-        }))
-      })) || [];
+      const transformedData =
+        data?.map((post) => ({
+          id: post.id,
+          preview_image_url: post.preview_image_url,
+          title: post.title,
+          created_at: post.created_at,
+          category_id: post.category_id,
+          category_title: post.Category.title,
+          tags: post.PostTag.map((pt) => ({
+            tag_id: pt.tag_id,
+            name: pt.Tag.name,
+          })),
+        })) || [];
 
       setPostList(transformedData as Post[]);
     }
@@ -153,7 +156,10 @@ export default function Home() {
               <IconButton Icon={CgProfile} />
             </div>
           </div>
-          <div className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400">
+          <a
+            href={'/study'}
+            className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400"
+          >
             <div className="mb-2 w-full flex-col items-center justify-center ">
               <div className="flex items-center justify-center text-sm">
                 이 달의&nbsp;
@@ -166,7 +172,7 @@ export default function Home() {
                 />
               </div>
             </div>
-          </div>
+          </a>
           <div className="mt-2 flex justify-center space-x-2">
             <div className={`size-2 rounded-full bg-gray-400`}></div>
             <div className={`size-2 rounded-full bg-gray-300`}></div>
@@ -185,7 +191,7 @@ export default function Home() {
       <div className="my-2" />
       <div className="w-full">
         {postList.map((item, index) => (
-          <a href={'/posts/' + item.id} key={index} target='_blank'>
+          <a href={'/posts/' + item.id} key={index} target="_blank">
             <PostArticle
               image={item.preview_image_url}
               title={item.title}

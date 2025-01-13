@@ -8,9 +8,9 @@ type QuoteCardProps = {
 const QuoteCard: FC<QuoteCardProps> = ({ quote, speaker }) => {
   console.log(quote);
   return (
-    <div className="text-center break-keep">
+    <div className="break-keep text-center font-semibold text-slate-500">
       &ldquo;{quote}&rdquo;
-      <div className="">- {speaker} -</div>
+      <div className="text-center font-light text-slate-800">- {speaker} -</div>
     </div>
   );
 };

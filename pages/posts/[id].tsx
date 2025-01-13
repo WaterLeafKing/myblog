@@ -59,7 +59,7 @@ export default function Post({ id }: PostProps) {
           tag_id: pt.tag_id,
           name: pt.Tag.name
         }))
-      } || [];
+      };
       console.log(transformedData);
 
       setPost(transformedData);

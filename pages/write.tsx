@@ -137,7 +137,7 @@ export default function Write() {
           />
           <div className="flex gap-2">
             {tagLIst.map(
-              tag=>(<div className="text-sm bg-orange-200 rounded-lg px-2 py-1">{tag}</div>))}
+              (tag, index)=>(<div key={index}className="text-sm bg-orange-200 rounded-lg px-2 py-1">{tag}</div>))}
         </div>
         </div>
         <button

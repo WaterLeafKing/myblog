@@ -1,13 +1,8 @@
 import Category from '@/components/Category';
-import CategoryCardSection from '@/components/CategoryCardSection';
-import IconButton from '@/components/IconComponent';
 import PostArticle from '@/components/PostArticle';
 import QuoteCard from '@/components/QuoteCard';
-import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { BsChatQuote } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
 
 interface Post {
   id: number;
@@ -76,7 +71,7 @@ export default function Home() {
       `,
       )
       .order('created_at', { ascending: false })
-      .range(3, 13)
+      .range(0, 33)
       .returns<PostWithJoins[]>();
 
     if (error) {
@@ -141,7 +136,7 @@ export default function Home() {
 
   return (
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
-      <div className="mb-4 mt-8 flex w-full gap-2">
+      {/* <div className="mb-4 mt-8 flex w-full gap-2">
         <SwipeUI />
         <div id="help" className="md:block hidden lg:block">
           <div className="flex gap-2">
@@ -178,16 +173,16 @@ export default function Home() {
             <div className={`size-2 rounded-full bg-gray-300`}></div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center font-extralight">
+      </div> */}
+      <div className="my-8 flex justify-center font-extralight">
         <div className="flex text-sm italic">
           <QuoteCard quote={quote.quote} speaker={quote.speaker} />
         </div>
       </div>
       <div className="my-2" />
-      <div className="hidden lg:block">
+      {/* <div className="hidden lg:block">
         <CategoryCardSection categories={CategoryList} />
-      </div>
+      </div> */}
       <div className="my-2" />
       <div className="w-full">
         {postList.map((item, index) => (

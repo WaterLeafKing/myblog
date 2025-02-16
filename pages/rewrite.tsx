@@ -56,7 +56,7 @@ export default function Rewrite({ id }: PostProps) {
       };
       console.log(transformedData);
 
-      setPost(transformedData);
+      // setPost(transformedData);
     }
   };
 

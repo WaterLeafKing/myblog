@@ -179,11 +179,9 @@ export default function Home() {
           <QuoteCard quote={quote.quote} speaker={quote.speaker} />
         </div>
       </div>
-      <div className="my-2" />
       {/* <div className="hidden lg:block">
         <CategoryCardSection categories={CategoryList} />
       </div> */}
-      <div className="my-2" />
       <div className="w-full">
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index} target="_blank">

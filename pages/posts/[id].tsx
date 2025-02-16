@@ -5,7 +5,6 @@ import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
 import { useEffect, useState } from 'react';
-import { BiShareAlt } from 'react-icons/bi';
 
 type PostProps = {
   id: number;
@@ -17,7 +16,7 @@ interface Post {
   title: string;
   content: string;
   created_at: string;
-  tags: { tag_id: number; name: string; }[];
+  tags: { tag_id: number; name: string }[];
 }
 
 interface Comment {
@@ -39,10 +38,12 @@ export default function Post({ id }: PostProps) {
   const fetchPost = async (id: number) => {
     const { data, error } = await supabase
       .from('Post')
-      .select(`id, preview_image_url, title, content, created_at, PostTag (
+      .select(
+        `id, preview_image_url, title, content, created_at, PostTag (
           tag_id,
           Tag (name)
-        )`)
+        )`,
+      )
       .eq('id', id)
       .single();
 
@@ -57,8 +58,8 @@ export default function Post({ id }: PostProps) {
         created_at: data.created_at,
         tags: data.PostTag.map((pt: any) => ({
           tag_id: pt.tag_id,
-          name: pt.Tag.name
-        }))
+          name: pt.Tag.name,
+        })),
       };
       console.log(transformedData);
 
@@ -90,22 +91,24 @@ export default function Post({ id }: PostProps) {
 
   return (
     <>
-      <div
+      {/* <div
         id="test"
         className="fixed left-[calc((100%-900px)/2)] top-28 hidden items-center justify-center lg:block"
       >
         <div className="flex size-12 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer hover:border-gray-600">
           <BiShareAlt size={24} />
         </div>
-      </div>
+      </div> */}
       <div className="sm:px-6 md:px-7 container mx-auto my-8 flex flex-col px-4 lg:px-8">
         {post ? (
           <>
-            <div className="my-4 mb-4 whitespace-pre-wrap break-keep text-3xl font-bold lg:text-4xl">
+            <div className="my-4 whitespace-pre-wrap break-keep text-3xl font-bold lg:text-4xl">
               {post.title}
             </div>
             <div className="mb-8 flex-row">
-              {post.tags.map((item,index)=>(<Tag key={index} tag={item.name}/>))}
+              {post.tags.map((item, index) => (
+                <Tag key={index} tag={item.name} />
+              ))}
             </div>
             <img
               src={post.preview_image_url}

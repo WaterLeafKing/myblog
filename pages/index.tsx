@@ -3,6 +3,7 @@ import PostArticle from '@/components/PostArticle';
 import QuoteCard from '@/components/QuoteCard';
 import { createClient } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
+import ReactSelect from 'react-select';
 
 interface Post {
   id: number;
@@ -50,8 +51,9 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
-  const [CategoryList, setCategoryList] = useState<Category[]>([]);
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [quote, setQuote] = useState<Quote>({ id: -1, quote: '', speaker: '' });
+  const [loading, setLoading] = useState(false);
 
   const fetchPostList = async () => {
     const { data, error } = await supabase
@@ -134,6 +136,67 @@ export default function Home() {
     console.log(quote);
   }, [quote]);
 
+  // Transform CategoryList into ReactSelect options format
+  const categoryOptions = [
+    { value: 0, label: 'All' },
+    ...categoryList.map((category) => ({
+      value: category.id,
+      label: category.title,
+    })),
+  ];
+
+  const filterPostList = async (categoryId: number) => {
+    try {
+      setLoading(true);
+      let query = supabase
+        .from('Post')
+        .select(
+          `
+          id,
+          preview_image_url,
+          title,
+          created_at,
+          category_id,
+          Category:category_id (title),
+          PostTag (
+            tag_id,
+            Tag (name)
+          )
+        `,
+        )
+        .order('created_at', { ascending: false })
+        .range(0, 33);
+
+      // Add category filter if categoryId is not 0 (All)
+      if (categoryId !== 0) {
+        query = query.eq('category_id', categoryId);
+      }
+
+      const { data, error } = await query.returns<PostWithJoins[]>();
+
+      if (error) throw error;
+
+      const transformedData =
+        data?.map((post) => ({
+          id: post.id,
+          preview_image_url: post.preview_image_url,
+          title: post.title,
+          created_at: post.created_at,
+          category_id: post.category_id,
+          category_title: post.Category.title,
+          tags: post.PostTag.map((pt: any) => ({
+            tag_id: pt.tag_id,
+            name: pt.Tag.name,
+          })),
+        })) || [];
+
+      setPostList(transformedData);
+    } catch (error) {
+      console.error('Error searching posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
       {/* <div className="mb-4 mt-8 flex w-full gap-2">
@@ -174,8 +237,8 @@ export default function Home() {
           </div>
         </div>
       </div> */}
-      <div className="my-8 flex justify-center font-extralight">
-        <div className="flex text-sm italic">
+      <div className="my-8 flex justify-center rounded-lg border border-slate-300 py-4 font-extralight">
+        <div className="flex text-sm italic ">
           <QuoteCard quote={quote.quote} speaker={quote.speaker} />
         </div>
       </div>
@@ -183,6 +246,40 @@ export default function Home() {
         <CategoryCardSection categories={CategoryList} />
       </div> */}
       <div className="w-full">
+        <div className="mb-3">
+          <ReactSelect
+            className="focus:border focus:border-orange-400"
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused
+                  ? '#fb923c'
+                  : baseStyles.borderColor,
+                '&:hover': {
+                  borderColor: '#fb923c',
+                },
+                boxShadow: state.isFocused ? '0 0 0 1px #fb923c' : 'none',
+                color: '#777777',
+              }),
+              option: (baseStyles, state) => ({
+                ...baseStyles,
+                backgroundColor: state.isSelected ? '#fb923c' : 'white',
+                '&:hover': {
+                  backgroundColor: state.isSelected ? '#fb923c' : '#fff8f1',
+                },
+                color: state.isSelected ? 'white' : '#777777',
+              }),
+              singleValue: (baseStyles) => ({
+                ...baseStyles,
+                color: '#777777',
+              }),
+            }}
+            options={categoryOptions}
+            placeholder="All"
+            isMulti={false}
+            onChange={(option) => filterPostList(option?.value || 0)}
+          />
+        </div>
         {postList.map((item, index) => (
           <a href={'/posts/' + item.id} key={index} target="_blank">
             <PostArticle

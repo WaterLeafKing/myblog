@@ -17,9 +17,9 @@ const PostArticle: FC<PostArticleProps> = ({
 }) => {
   return (
     <div className="mb-3 flex">
-      <div className="mr-2 flex h-16 w-24 shrink-0 flex-col overflow-hidden lg:h-28 lg:w-40">
+      <div className="mr-2 flex h-16 w-24 shrink-0 flex-col overflow-hidden lg:h-28 lg:w-44">
         <img
-          className="duration-800 h-16 w-24 object-cover transition-transform ease-in-out lg:h-28 lg:w-40 lg:hover:scale-110"
+          className="duration-800 h-16 w-24 object-cover transition-transform ease-in-out lg:h-28 lg:w-44 lg:hover:scale-110"
           src={image}
         />
       </div>

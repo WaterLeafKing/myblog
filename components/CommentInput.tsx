@@ -26,7 +26,7 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
 
     // Validate required fields
     if (!comment || comment == '') {
-      alert('내용을 입력해주세요.');
+      alert('please enter your comment');
       return;
     }
 
@@ -49,7 +49,7 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
       onAddComment(data[0]);
     } catch (error) {
       console.error('Error inserting post:', error);
-      alert('댓글 작성 중 오류가 발생했습니다.');
+      alert('an error accured while submitting your comment');
     } finally {
       //
     }
@@ -63,7 +63,7 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
             text-slate-700 shadow-sm transition duration-300 placeholder:text-slate-400
              hover:border-b-slate-300 
             ${comment ? ' border-orange-400 focus:border-orange-400 focus:shadow-none focus:outline-none' : 'border-slate-200 focus:border-b-slate-400 focus:shadow-none focus:outline-none'}`}
-          placeholder="의견과 칭찬 아낌없이 써주세요"
+          placeholder="write your comment here with good words"
           onChange={(e) => setComment(e.target.value)}
           value={comment}
         />
@@ -73,7 +73,7 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
             className="text-sm text-slate-400"
             onClick={() => setComment('')}
           >
-            취소
+            cancel
           </button>
           <button
             type="submit"
@@ -81,7 +81,7 @@ const CommentInput: FC<CommentInputProps> = ({ postId, onAddComment }) => {
               comment ? 'border-orange-400 text-orange-400' : ''
             }`}
           >
-            등록
+            submit
           </button>
         </div>
       </form>

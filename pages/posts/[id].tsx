@@ -122,7 +122,7 @@ export default function Post({ id }: PostProps) {
         ) : (
           <p>Loading...</p>
         )}
-        <div className="mt-12 font-bold">댓글 {commentList.length}개</div>
+        <div className="mt-12 font-bold">{commentList.length} comments</div>
         <div className="my-4">
           <CommentInput postId={id} onAddComment={handleAddComment} />
         </div>

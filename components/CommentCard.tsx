@@ -31,7 +31,7 @@ const CommentCard: FC<CommentCardProps> = ({
     <div className="my-1 flex-col">
       <div className="flex items-end">
         <div className="flex h-6 min-w-[32px] shrink-0 items-center justify-center rounded-lg bg-gray-200 px-2 text-sm font-bold">
-          {sub_id}.나그네
+          {sub_id}.anonymous
         </div>
         <div className="ml-2 text-xs font-extralight">
           {formatDate(comment_created_at)}

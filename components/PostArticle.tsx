@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Tag from './Tag';
 
 type PostArticleProps = {
   image: string;
@@ -27,14 +26,18 @@ const PostArticle: FC<PostArticleProps> = ({
         id="content_text"
         className="relative ml-1 flex w-full flex-col justify-center"
       >
-        <div className="text-[10px] font-thin text-black">{category}</div>
+        <div>
+          {tags.map((item, index) => (
+            <span
+              key={index}
+              className="mr-2 text-[10px] font-thin text-slate-900 hover:cursor-pointer hover:text-orange-400"
+            >
+              {item.name}
+            </span>
+          ))}
+        </div>
         <div className="break-words text-xs font-normal text-gray-900 hover:text-orange-400 lg:text-base">
           {title}
-        </div>
-        <div className="my-2 flex gap-2">
-          {tags.map((item, index) => (
-            <Tag key={index} tag={item.name} />
-          ))}
         </div>
       </div>
     </div>

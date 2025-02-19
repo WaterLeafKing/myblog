@@ -102,19 +102,24 @@ export default function Post({ id }: PostProps) {
       <div className="sm:px-6 md:px-7 container mx-auto my-8 flex flex-col px-4 lg:px-8">
         {post ? (
           <>
-            <div className="my-4 whitespace-pre-wrap break-keep text-3xl font-bold lg:text-4xl">
-              {post.title}
+            <div className="relative h-full">
+              <div className="absolute inset-0 bottom-8 z-10 flex flex-col items-center justify-end p-4">
+                <div className="flex-row p-2">
+                  {post.tags.map((item, index) => (
+                    <Tag key={index} tag={item.name} />
+                  ))}
+                </div>
+                <div className="break-keep text-center text-3xl font-medium text-white">
+                  {post.title}
+                </div>
+              </div>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-black/70"></div>
+              <img
+                src={post.preview_image_url}
+                alt={`Preview image for ${post.title}`}
+                className="h-[420px] w-full rounded-lg object-cover"
+              />
             </div>
-            <div className="mb-8 flex-row">
-              {post.tags.map((item, index) => (
-                <Tag key={index} tag={item.name} />
-              ))}
-            </div>
-            <img
-              src={post.preview_image_url}
-              alt={`Preview image for ${post.title}`}
-              className="rounded-lg"
-            />
             <div className="my-4">
               <MarkdownViewer source={post.content} />
             </div>

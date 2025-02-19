@@ -237,7 +237,7 @@ export default function Home() {
           </div>
         </div>
       </div> */}
-      <div className="my-8 flex justify-center rounded-lg border border-slate-300 py-4 font-extralight">
+      <div className="my-8 flex justify-center rounded-sm border border-slate-300 py-4 font-extralight">
         <div className="flex text-sm italic ">
           <QuoteCard quote={quote.quote} speaker={quote.speaker} />
         </div>
@@ -258,7 +258,7 @@ export default function Home() {
                 '&:hover': {
                   borderColor: '#fb923c',
                 },
-                boxShadow: state.isFocused ? '0 0 0 1px #fb923c' : 'none',
+                boxShadow: state.isFocused ? '0 0 0 1px #ffffff' : 'none',
                 color: '#777777',
               }),
               option: (baseStyles, state) => ({

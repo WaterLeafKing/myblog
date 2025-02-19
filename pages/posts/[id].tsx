@@ -113,7 +113,7 @@ export default function Post({ id }: PostProps) {
                   {post.title}
                 </div>
               </div>
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-black/70"></div>
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
               <img
                 src={post.preview_image_url}
                 alt={`Preview image for ${post.title}`}

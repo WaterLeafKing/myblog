@@ -34,6 +34,18 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default function Post({ id }: PostProps) {
   const [post, setPost] = useState<Post>();
   const [commentList, setCommentList] = useState<Comment[]>([]);
+  const [headings, setHeadings] = useState<{ text: string; level: number }[]>(
+    [],
+  );
+
+  const extractHeadings = (content: string) => {
+    const headingRegex = /^#{1,2}\s+(.+)$/gm;
+    const matches = content.match(headingRegex) || [];
+    return matches.map((match) => ({
+      text: match.replace(/^#+\s+/, ''),
+      level: match.startsWith('##') ? 2 : 1,
+    }));
+  };
 
   const fetchPost = async (id: number) => {
     const { data, error } = await supabase
@@ -64,6 +76,7 @@ export default function Post({ id }: PostProps) {
       console.log(transformedData);
 
       setPost(transformedData);
+      setHeadings(extractHeadings(transformedData.content));
     }
   };
 
@@ -87,6 +100,42 @@ export default function Post({ id }: PostProps) {
 
   const handleAddComment = (newComment: Comment) => {
     setCommentList((prevComments) => [...prevComments, newComment]);
+  };
+
+  const generateHeadingId = (text: string) => {
+    return text.toLowerCase().replace(/\s+/g, '-');
+  };
+
+  const scrollToHeading = (headingText: string) => {
+    const maxAttempts = 5;
+    let attempts = 0;
+
+    const tryScroll = () => {
+      const targetId = generateHeadingId(headingText);
+      const element = document.getElementById(targetId);
+
+      console.log('Trying to scroll to:', {
+        targetId,
+        headingText,
+        elementFound: !!element,
+        attempt: attempts + 1,
+      });
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+        setTimeout(() => {
+          window.scrollBy(0, -100);
+        }, 100);
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(tryScroll, 200);
+      }
+    };
+
+    tryScroll();
   };
 
   return (
@@ -120,8 +169,53 @@ export default function Post({ id }: PostProps) {
                 className="h-[420px] w-full rounded-lg object-cover"
               />
             </div>
-            <div className="my-4">
-              <MarkdownViewer source={post.content} />
+            <div className="relative mt-8">
+              <div
+                id="tableofcontents"
+                className="top-24 block rounded-md bg-white p-4 shadow-md shadow-slate-200 lg:fixed lg:ml-[760px] lg:block lg:w-80"
+              >
+                <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
+                <nav>
+                  {headings.map((heading, index) => (
+                    <a
+                      key={index}
+                      href={`#${generateHeadingId(heading.text)}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToHeading(heading.text);
+                      }}
+                      className={`text-stalte-600 block hover:text-orange-400 ${
+                        heading.level === 2 ? 'ml-4' : 'ml-4'
+                      } mb-1`}
+                    >
+                      {heading.text}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+              <MarkdownViewer
+                source={post.content}
+                components={{
+                  h1: ({ children }) => {
+                    console.log('h1 children:', children);
+                    const headingText = Array.isArray(children)
+                      ? children[1]
+                      : String(children);
+                    return (
+                      <h1 id={generateHeadingId(headingText)}>{children}</h1>
+                    );
+                  },
+                  h2: ({ children }) => {
+                    console.log('h2 children:', children);
+                    const headingText = Array.isArray(children)
+                      ? children[1]
+                      : String(children);
+                    return (
+                      <h2 id={generateHeadingId(headingText)}>{children}</h2>
+                    );
+                  },
+                }}
+              />
             </div>
           </>
         ) : (

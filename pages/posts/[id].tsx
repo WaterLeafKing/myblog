@@ -166,7 +166,7 @@ export default function Post({ id }: PostProps) {
               <img
                 src={post.preview_image_url}
                 alt={`Preview image for ${post.title}`}
-                className="h-[420px] w-full rounded-lg object-cover"
+                className="h-[300px] w-full rounded-lg object-cover lg:h-[420px]"
               />
             </div>
             <div className="relative mt-8">

@@ -1,3 +1,4 @@
+import AboutMe from '@/components/AboutMe';
 import Category from '@/components/Category';
 import PostArticle from '@/components/PostArticle';
 import QuoteCard from '@/components/QuoteCard';
@@ -292,7 +293,8 @@ export default function Home() {
           </a>
         ))}
       </div>
-      <div className="my-10" />
+      <div className="mt-8" />
+      <AboutMe />
     </main>
   );
 }

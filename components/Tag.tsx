@@ -6,7 +6,7 @@ type TagProps = {
 
 const Tag: FC<TagProps> = ({ tag }) => {
   return (
-    <span className="rounded-full px-2 py-1 text-xs font-thin text-white hover:cursor-pointer hover:text-orange-400">
+    <span className="rounded-full px-2 py-1 text-xs font-thin text-white">
       {tag}
     </span>
   );

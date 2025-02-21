@@ -196,7 +196,7 @@ export default function Post({ id }: PostProps) {
             <div className="relative mt-8">
               <div
                 id="tableofcontents"
-                className="top-24 block rounded-md bg-white p-4 shadow-md shadow-slate-200 lg:fixed lg:ml-[760px] lg:block lg:w-80"
+                className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[760px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
               >
                 <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
                 <nav className="relative">

@@ -218,14 +218,14 @@ export default function Post({ id }: PostProps) {
                         className={`absolute -left-3.5 z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
                           activeHeading === generateHeadingId(heading.text)
                             ? 'bg-orange-400'
-                            : 'bg-slate-600 group-hover:bg-orange-200'
+                            : 'bg-slate-600 group-hover:bg-orange-400'
                         }`}
                       />
                       <span
-                        className={`ml-4 hover:text-orange-400 ${
+                        className={`ml-4 transition-colors ${
                           activeHeading === generateHeadingId(heading.text)
                             ? 'text-orange-400'
-                            : 'text-slate-600'
+                            : 'text-slate-600 group-hover:text-orange-400'
                         }`}
                       >
                         {heading.text}

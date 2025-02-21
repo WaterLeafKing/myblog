@@ -176,13 +176,13 @@ export default function Post({ id }: PostProps) {
         {post ? (
           <>
             <div className="relative h-full">
-              <div className="absolute inset-0 bottom-8 z-10 flex flex-col items-center justify-end p-4">
+              <div className="absolute inset-0 bottom-4 z-10 flex flex-col items-center justify-end p-4 lg:bottom-8">
                 <div className="flex-row p-2">
                   {post.tags.map((item, index) => (
                     <Tag key={index} tag={item.name} />
                   ))}
                 </div>
-                <div className="break-keep text-center text-3xl font-medium text-white">
+                <div className="break-keep text-center text-xl font-medium text-white lg:text-3xl">
                   {post.title}
                 </div>
               </div>

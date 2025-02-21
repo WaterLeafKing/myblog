@@ -37,6 +37,7 @@ export default function Post({ id }: PostProps) {
   const [headings, setHeadings] = useState<{ text: string; level: number }[]>(
     [],
   );
+  const [activeHeading, setActiveHeading] = useState<string>('');
 
   const extractHeadings = (content: string) => {
     const headingRegex = /^#{1,2}\s+(.+)$/gm;
@@ -97,6 +98,29 @@ export default function Post({ id }: PostProps) {
     fetchPost(id);
     fetchComment(id);
   }, [id]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveHeading(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-100px 0px -66%',
+        threshold: 0,
+      },
+    );
+
+    const headingElements = document.querySelectorAll('h1, h2');
+    headingElements.forEach((element) => observer.observe(element));
+
+    return () => {
+      headingElements.forEach((element) => observer.unobserve(element));
+    };
+  }, [post]);
 
   const handleAddComment = (newComment: Comment) => {
     setCommentList((prevComments) => [...prevComments, newComment]);
@@ -175,7 +199,9 @@ export default function Post({ id }: PostProps) {
                 className="top-24 block rounded-md bg-white p-4 shadow-md shadow-slate-200 lg:fixed lg:ml-[760px] lg:block lg:w-80"
               >
                 <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
-                <nav>
+                <nav className="relative">
+                  <div className="absolute left-2 top-0 h-full w-px bg-gray-400" />
+
                   {headings.map((heading, index) => (
                     <a
                       key={index}
@@ -184,11 +210,26 @@ export default function Post({ id }: PostProps) {
                         e.preventDefault();
                         scrollToHeading(heading.text);
                       }}
-                      className={`text-stalte-600 block hover:text-orange-400 ${
+                      className={`group relative flex items-center ${
                         heading.level === 2 ? 'ml-4' : 'ml-4'
                       } mb-1`}
                     >
-                      {heading.text}
+                      <span
+                        className={`absolute -left-3.5 z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
+                          activeHeading === generateHeadingId(heading.text)
+                            ? 'bg-orange-400'
+                            : 'bg-slate-600 group-hover:bg-orange-200'
+                        }`}
+                      />
+                      <span
+                        className={`ml-4 hover:text-orange-400 ${
+                          activeHeading === generateHeadingId(heading.text)
+                            ? 'text-orange-400'
+                            : 'text-slate-600'
+                        }`}
+                      >
+                        {heading.text}
+                      </span>
                     </a>
                   ))}
                 </nav>

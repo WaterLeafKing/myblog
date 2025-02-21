@@ -200,7 +200,7 @@ export default function Post({ id }: PostProps) {
               >
                 <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
                 <nav className="relative">
-                  <div className="absolute left-2 top-0 h-full w-px bg-gray-400" />
+                  <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
 
                   {headings.map((heading, index) => (
                     <a
@@ -215,7 +215,7 @@ export default function Post({ id }: PostProps) {
                       } mb-1`}
                     >
                       <span
-                        className={`absolute -left-3.5 z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
+                        className={`absolute -left-[13.6px] z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
                           activeHeading === generateHeadingId(heading.text)
                             ? 'bg-orange-400'
                             : 'bg-slate-600 group-hover:bg-orange-400'

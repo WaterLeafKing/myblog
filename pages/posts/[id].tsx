@@ -233,6 +233,16 @@ export default function Post({ id }: PostProps) {
                     </a>
                   ))}
                 </nav>
+                <a
+                  href="#comment-input"
+                  className="ml-1 text-sm text-slate-600 hover:text-orange-400"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHeading('comment-input');
+                  }}
+                >
+                  Comments
+                </a>
               </div>
               <MarkdownViewer
                 source={post.content}
@@ -263,7 +273,7 @@ export default function Post({ id }: PostProps) {
           <p>Loading...</p>
         )}
         <div className="mt-12 font-bold">{commentList.length} comments</div>
-        <div className="my-4">
+        <div className="my-4" id="comment-input">
           <CommentInput postId={id} onAddComment={handleAddComment} />
         </div>
         {commentList.map((item, index) => (

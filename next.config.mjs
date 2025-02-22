@@ -20,7 +20,7 @@ const nextConfig = {
       },
     };
   },
-  async rewrites() {
+  rewrites: async () => {
     return [
       {
         source: '/sitemap.xml',

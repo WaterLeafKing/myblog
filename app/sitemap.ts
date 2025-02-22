@@ -9,15 +9,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: 'https://nerdinsight.vercel.app/blog',
+      url: 'https://nerdinsight.vercel.app/posts',
       lastModified: new Date(),
       changeFrequency: 'daily',
-      priority: 0.8,
-    },
-    {
-      url: 'https://nerdinsight.vercel.app/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
       priority: 0.5,
     },
   ];

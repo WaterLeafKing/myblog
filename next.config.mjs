@@ -20,18 +20,6 @@ const nextConfig = {
       },
     };
   },
-  rewrites: async () => {
-    return [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap.xml',
-      },
-      {
-        source: '/robots.txt',
-        destination: '/api/robots.txt',
-      },
-    ];
-  },
 };
 
 export default removeImports(nextConfig);

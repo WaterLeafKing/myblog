@@ -1,39 +1,35 @@
-import { getAllPostIds } from '@/lib/posts';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export async function generateSitemap(domain: string) {
-  const posts = getAllPostIds();
+  // Get the current date for lastmod
+  const date = new Date().toISOString();
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  // Create the XML structure
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      <!-- 메인 페이지 -->
       <url>
         <loc>${domain}</loc>
+        <lastmod>${date}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
       </url>
-      
-      <!-- 블로그 포스트들 -->
-      ${posts
-        .map((post) => {
-          return `
-            <url>
-              <loc>${domain}/posts/${post.params.id}</loc>
-              <changefreq>weekly</changefreq>
-              <priority>0.7</priority>
-            </url>
-          `;
-        })
-        .join('')}
-    </urlset>
-  `;
+      <url>
+        <loc>${domain}/blog</loc>
+        <lastmod>${date}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <!-- Add more static routes as needed -->
+    </urlset>`;
+
+  return sitemap;
 }
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const domain = 'https://nerdinsight.app';
+  const domain = 'https://nerdinsight.vercel.app';
   const sitemap = await generateSitemap(domain);
 
   res.setHeader('Content-Type', 'text/xml');

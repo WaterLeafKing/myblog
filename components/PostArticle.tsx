@@ -17,10 +17,10 @@ const PostArticle: FC<PostArticleProps> = ({
   duration_time,
 }) => {
   return (
-    <div className="mb-3 flex">
-      <figure className="relative mr-2 flex h-16 w-24 shrink-0 flex-col rounded-sm border border-gray-200 lg:h-32 lg:w-48">
+    <div className="sm:flex-row mb-3 flex flex-col">
+      <figure className="sm:mb-0 sm:mr-2 sm:h-16 sm:w-24 relative mb-2 h-48 w-full shrink-0 flex-col rounded-sm border border-gray-200 lg:h-32 lg:w-48">
         <img
-          className="size-full rounded-sm object-cover transition-opacity lg:h-32 lg:w-48 lg:duration-300 lg:hover:opacity-80"
+          className="sm:h-16 sm:w-24 size-full rounded-sm object-cover transition-opacity lg:h-32 lg:w-48 lg:duration-300 lg:hover:opacity-80"
           src={image}
           alt={title}
         />

@@ -216,7 +216,7 @@ export default function Home() {
         <meta property="og:url" content="https://nerdinsight.vercel.app" />
         <meta property="og:type" content="website" />
       </Head>
-      <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
+      <main className="container mx-auto flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
         {/* <div className="mb-4 mt-8 flex w-full gap-2">
           <SwipeUI />
           <div id="help" className="md:block hidden lg:block">
@@ -298,20 +298,27 @@ export default function Home() {
               onChange={(option) => filterPostList(option?.value || 0)}
             />
           </div>
-          {postList.map((item, index) => (
-            <a href={'/posts/' + item.id} key={index} target="_blank">
-              <PostArticle
-                image={item.preview_image_url}
-                title={item.title}
-                created_at={
-                  new Date(item.created_at).toISOString().split('T')[0]
-                }
-                category={item.category_title}
-                tags={item.tags}
-                duration_time={item.duration_time}
-              />
-            </a>
-          ))}
+          <div
+            id="post_list"
+            className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
+          >
+            {postList.map((item, index) => (
+              <div key={index} className="w-full">
+                <a href={'/posts/' + item.id} target="_blank" className="block">
+                  <PostArticle
+                    image={item.preview_image_url}
+                    title={item.title}
+                    created_at={
+                      new Date(item.created_at).toISOString().split('T')[0]
+                    }
+                    category={item.category_title}
+                    tags={item.tags}
+                    duration_time={item.duration_time}
+                  />
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="mt-8" />
         <AboutMe />

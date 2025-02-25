@@ -17,17 +17,17 @@ const PostArticle: FC<PostArticleProps> = ({
   duration_time,
 }) => {
   return (
-    <div className="sm:flex-row mb-3 flex flex-col">
-      <figure className="sm:mb-0 sm:mr-2 sm:h-16 sm:w-24 relative mb-2 h-48 w-full shrink-0 flex-col rounded-sm border border-gray-200 lg:h-32 lg:w-48">
+    <div className="flex flex-col gap-2">
+      <figure className="relative h-48 shrink-0 rounded-md border border-gray-200 md:h-40 lg:h-44">
         <img
-          className="sm:h-16 sm:w-24 size-full rounded-sm object-cover transition-opacity lg:h-32 lg:w-48 lg:duration-300 lg:hover:opacity-80"
+          className="size-full h-48 rounded-md object-cover transition-opacity md:h-40 lg:h-44 lg:duration-300 lg:hover:opacity-80"
           src={image}
           alt={title}
         />
       </figure>
       <div
         id="content_text"
-        className="relative z-10 ml-1 flex w-full flex-col justify-center"
+        className="relative flex w-full flex-col justify-center"
       >
         <div>
           {tags.map((item, index) => (
@@ -56,7 +56,7 @@ const PostArticle: FC<PostArticleProps> = ({
               d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-          {duration_time} min read
+          {duration_time} min
         </div>
       </div>
     </div>

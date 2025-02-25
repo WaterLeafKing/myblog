@@ -172,7 +172,7 @@ export default function Post({ id }: PostProps) {
           <BiShareAlt size={24} />
         </div>
       </div> */}
-      <div className="sm:px-6 md:px-7 container mx-auto my-8 flex flex-col px-4 lg:px-8">
+      <div className="container mx-auto my-8 flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
         {post ? (
           <>
             <div className="relative h-full">
@@ -196,7 +196,7 @@ export default function Post({ id }: PostProps) {
             <div className="relative mt-8">
               <div
                 id="tableofcontents"
-                className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[760px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
+                className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[980px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
               >
                 <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
                 <nav className="relative">

@@ -10,6 +10,7 @@ interface Post {
   category_id: number;
   category_title: string;
   tags: { tag_id: number; name: string }[];
+  duration_time: number;
 }
 
 interface Category {
@@ -33,6 +34,7 @@ interface PostWithJoins {
       name: string;
     };
   }[];
+  duration_time: number;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -64,7 +66,8 @@ export default function Search() {
         PostTag (
           tag_id,
           Tag (name)
-        )
+        ),
+        duration_time
       `,
         )
         .or(`title.ilike.%${searchQuery}%,content.ilike.%${searchQuery}%`)
@@ -83,6 +86,7 @@ export default function Search() {
             tag_id: pt.tag_id,
             name: pt.Tag.name,
           })),
+          duration_time: post.duration_time,
         })) || [];
 
       setPostList(transformedData);
@@ -126,11 +130,10 @@ export default function Search() {
               <PostArticle
                 image={item.preview_image_url}
                 title={item.title}
-                created_at={
-                  new Date(item.created_at).toISOString().split('T')[0]
-                }
+                created_at={item.created_at}
                 category={item.category_title}
                 tags={item.tags}
+                duration_time={item.duration_time}
               />
             </a>
           ))}

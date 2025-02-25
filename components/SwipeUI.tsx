@@ -185,10 +185,13 @@ const SwipeUI: React.FC = () => {
   );
 
   return (
-    <div className="group relative lg:w-3/4">
-      <div ref={containerRef} className="flex overflow-hidden rounded-lg">
+    <div className="group relative">
+      <div
+        ref={containerRef}
+        className="relative flex overflow-hidden rounded-lg"
+      >
         {postList.map((slide, index) => (
-          <div key={index} className={`md:h-64 h-52 min-w-full lg:h-72`}>
+          <div key={index} className={`h-52 min-w-full md:h-64 lg:h-72`}>
             <a href={'/posts/' + slide.id} target="_blank">
               <HomeCard
                 title={slide.text}
@@ -198,6 +201,19 @@ const SwipeUI: React.FC = () => {
             </a>
           </div>
         ))}
+
+        {/* <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center space-x-3">
+          {postList.slice(1, -1).map((_, index) => (
+            <div
+              key={index}
+              className={`size-2.5 rounded-full transition-colors ${
+                currentIndex === index + 1
+                  ? 'bg-white shadow-[0_0_4px_rgba(0,0,0,0.4)]'
+                  : 'bg-gray-400/80'
+              }`}
+            ></div>
+          ))}
+        </div> */}
       </div>
 
       <button
@@ -238,17 +254,6 @@ const SwipeUI: React.FC = () => {
           />
         </svg>
       </button>
-
-      <div className="mt-2 flex justify-center space-x-2">
-        {postList.slice(1, -1).map((_, index) => (
-          <div
-            key={index}
-            className={`size-2 rounded-full ${
-              currentIndex === index + 1 ? 'bg-gray-400' : 'bg-gray-200'
-            }`}
-          ></div>
-        ))}
-      </div>
     </div>
   );
 };

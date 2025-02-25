@@ -1,7 +1,7 @@
-import AboutMe from '@/components/AboutMe';
 import Category from '@/components/Category';
 import PostArticle from '@/components/PostArticle';
 import QuoteCard from '@/components/QuoteCard';
+import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
@@ -216,10 +216,29 @@ export default function Home() {
         <meta property="og:url" content="https://nerdinsight.vercel.app" />
         <meta property="og:type" content="website" />
       </Head>
-      <main className="container mx-auto flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
-        {/* <div className="mb-4 mt-8 flex w-full gap-2">
-          <SwipeUI />
-          <div id="help" className="md:block hidden lg:block">
+      <main className="container mx-auto flex flex-col">
+        <div className="mb-4 mt-8 grid w-full grid-cols-3 gap-2">
+          <div className="col-span-3 md:col-span-2">
+            <SwipeUI />
+          </div>
+          <div className="hidden sm:hidden md:grid md:grid-cols-2 md:grid-rows-4 md:gap-2">
+            <div className="flex items-center justify-center rounded-full bg-orange-300 font-light text-white hover:cursor-pointer hover:bg-orange-400">
+              Who&apos;s Nerd?
+            </div>
+            <div className="flex items-center justify-center rounded-full bg-orange-300 font-light  text-white hover:cursor-pointer hover:bg-orange-400">
+              Friends
+            </div>
+            <div className="flex items-center justify-center rounded-full border border-slate-300 font-light hover:cursor-pointer hover:bg-slate-100">
+              Feedback
+            </div>
+            <div className="flex items-center justify-center rounded-full border border-slate-300 font-light hover:cursor-pointer hover:bg-slate-100">
+              Privacy Policy
+            </div>
+            <div className="col-span-2 row-span-2 flex rounded-md border border-slate-300 text-xs italic">
+              <QuoteCard quote={quote.quote} speaker={quote.speaker} />
+            </div>
+          </div>
+          {/* <div id="help" className="hidden md:block lg:block">
             <div className="flex gap-2">
               <a
                 href={'/opinion'}
@@ -232,33 +251,7 @@ export default function Home() {
                 <IconButton Icon={CgProfile} />
               </div>
             </div>
-            <a
-              href={'/study'}
-              className="mt-2 flex h-[232px] w-44 flex-col items-center justify-end rounded-lg border border-gray-300 bg-[#ffffff] hover:cursor-pointer hover:border-orange-400"
-            >
-              <div className="mb-2 w-full flex-col items-center justify-center ">
-                <div className="flex items-center justify-center text-sm">
-                  이 달의&nbsp;
-                  <span className="font-bold text-green-600">책</span>
-                </div>
-                <div className="flex items-center justify-center text-base">
-                  <img
-                    src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791191283594.jpg"
-                    className="w-32"
-                  />
-                </div>
-              </div>
-            </a>
-            <div className="mt-2 flex justify-center space-x-2">
-              <div className={`size-2 rounded-full bg-gray-400`}></div>
-              <div className={`size-2 rounded-full bg-gray-300`}></div>
-            </div>
-          </div>
-        </div> */}
-        <div className="my-8 flex justify-center rounded-sm border border-slate-300 py-4 font-extralight">
-          <div className="flex text-sm italic ">
-            <QuoteCard quote={quote.quote} speaker={quote.speaker} />
-          </div>
+          </div> */}
         </div>
         {/* <div className="hidden lg:block">
           <CategoryCardSection categories={CategoryList} />
@@ -320,8 +313,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <div className="mt-8" />
-        <AboutMe />
+        <div className="my-8" />
       </main>
     </>
   );

@@ -228,10 +228,10 @@ export default function Home() {
             <div className="flex items-center justify-center rounded-full bg-orange-300 font-light  text-white hover:cursor-pointer hover:bg-orange-400">
               Friends
             </div>
-            <div className="flex items-center justify-center rounded-full border border-slate-300 font-light hover:cursor-pointer hover:bg-slate-100">
+            <div className="flex items-center justify-center rounded-full border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
               Feedback
             </div>
-            <div className="flex items-center justify-center rounded-full border border-slate-300 font-light hover:cursor-pointer hover:bg-slate-100">
+            <div className="flex items-center justify-center rounded-full border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
               Privacy Policy
             </div>
             <div className="col-span-2 row-span-2 flex rounded-md border border-slate-300 text-xs italic">

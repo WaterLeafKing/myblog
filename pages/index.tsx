@@ -15,6 +15,7 @@ interface Post {
   category_id: number;
   category_title: string;
   tags: { tag_id: number; name: string }[];
+  duration_time: number;
 }
 
 interface Category {
@@ -44,6 +45,7 @@ interface PostWithJoins {
       name: string;
     };
   }[];
+  duration_time: number;
 }
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
@@ -71,7 +73,8 @@ export default function Home() {
         PostTag (
           tag_id,
           Tag (name)
-        )
+        ),
+        duration_time
       `,
       )
       .order('created_at', { ascending: false })
@@ -93,6 +96,7 @@ export default function Home() {
             tag_id: pt.tag_id,
             name: pt.Tag.name,
           })),
+          duration_time: post.duration_time,
         })) || [];
 
       setPostList(transformedData as Post[]);
@@ -163,7 +167,8 @@ export default function Home() {
           PostTag (
             tag_id,
             Tag (name)
-          )
+          ),
+          duration_time
         `,
         )
         .order('created_at', { ascending: false })
@@ -190,6 +195,7 @@ export default function Home() {
             tag_id: pt.tag_id,
             name: pt.Tag.name,
           })),
+          duration_time: post.duration_time,
         })) || [];
 
       setPostList(transformedData);
@@ -302,6 +308,7 @@ export default function Home() {
                 }
                 category={item.category_title}
                 tags={item.tags}
+                duration_time={item.duration_time}
               />
             </a>
           ))}

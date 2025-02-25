@@ -6,6 +6,7 @@ type PostArticleProps = {
   created_at: string;
   category: string;
   tags: { tag_id: number; name: string }[];
+  duration_time: number;
 };
 
 const PostArticle: FC<PostArticleProps> = ({
@@ -13,18 +14,20 @@ const PostArticle: FC<PostArticleProps> = ({
   title,
   category,
   tags,
+  duration_time,
 }) => {
   return (
     <div className="mb-3 flex">
-      <div className="mr-2 flex h-16 w-24 shrink-0 flex-col overflow-hidden rounded-sm border border-gray-200 lg:h-32 lg:w-48">
+      <figure className="relative mr-2 flex h-16 w-24 shrink-0 flex-col rounded-sm border border-gray-200 lg:h-32 lg:w-48">
         <img
-          className="duration-800 h-16 w-24 rounded-sm object-cover transition-transform ease-in-out lg:h-32 lg:w-48 lg:hover:scale-110"
+          className="size-full rounded-sm object-cover transition-opacity lg:h-32 lg:w-48 lg:duration-300 lg:hover:opacity-80"
           src={image}
+          alt={title}
         />
-      </div>
+      </figure>
       <div
         id="content_text"
-        className="relative ml-1 flex w-full flex-col justify-center"
+        className="relative z-10 ml-1 flex w-full flex-col justify-center"
       >
         <div>
           {tags.map((item, index) => (
@@ -38,6 +41,22 @@ const PostArticle: FC<PostArticleProps> = ({
         </div>
         <div className="break-words text-xs font-normal text-gray-900 hover:text-orange-400 lg:text-base">
           {title}
+        </div>
+        <div className="flex items-center gap-1 text-[10px] font-extralight text-slate-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="size-3"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          {duration_time} min read
         </div>
       </div>
     </div>

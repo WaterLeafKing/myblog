@@ -104,7 +104,7 @@ export default function Search() {
   };
 
   return (
-    <main className="sm:px-6 md:px-7 container mx-auto flex flex-col px-4 lg:px-8">
+    <main className="container mx-auto flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
       <div className="my-10">
         <div className="mb-6">
           <input
@@ -124,7 +124,7 @@ export default function Search() {
           </button>
         </div>
         <div className="my-4 text-xs">{postList.length} posts</div>
-        <div className="w-full space-y-4">
+        <div className="grid w-full grid-cols-3 gap-2">
           {postList.map((item, index) => (
             <a href={'/posts/' + item.id} key={index} target="_blank">
               <PostArticle

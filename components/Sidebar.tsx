@@ -28,7 +28,9 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       <Link href="/whos-nerd">
         <SideBarMenu title="Who's Nerd?" icon={AiOutlineQuestionCircle} />
       </Link>
-      <SideBarMenu title="Friends" icon={AiOutlineTeam} />
+      <Link href="/friends">
+        <SideBarMenu title="Friends" icon={AiOutlineTeam} />
+      </Link>
       <hr className="my-2" />
       <SideBarMenu title="FeedBack" icon={AiOutlineMessage} />
       <SideBarMenu title="Privacy Policy" icon={AiOutlineFileProtect} />

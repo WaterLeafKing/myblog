@@ -18,7 +18,7 @@ export default function Write() {
   const [title, setTitle] = useState('');
   const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
-  const [categoryList, setCategoryList] = useState<Category[]>([]);  
+  const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [tagList, setTagList] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -89,7 +89,7 @@ export default function Write() {
         title,
         preview_image_url: thumbnail,
         content,
-        category_id : selectedCategory,
+        category_id: selectedCategory,
       };
 
       const { data: insertedPost, error: postError } = await supabase
@@ -98,7 +98,7 @@ export default function Write() {
         .select();
 
       if (postError) throw postError;
-      
+
       const postId = insertedPost[0].id;
 
       // 2. Process each tag
@@ -111,7 +111,7 @@ export default function Write() {
           .single();
 
         let tagId;
-        
+
         if (!existingTag) {
           // Insert new tag if it doesn't exist
           const { data: newTag, error: tagError } = await supabase
@@ -119,7 +119,7 @@ export default function Write() {
             .insert([{ name: tagName }])
             .select()
             .single();
-            
+
           if (tagError) throw tagError;
           tagId = newTag.id;
         } else {
@@ -153,14 +153,14 @@ export default function Write() {
     const inputValue = e.target.value.trim();
     const tags = inputValue
       .split('#')
-      .filter(tag => tag.trim() !== '')
-      .map(tag => tag.trim())
+      .filter((tag) => tag.trim() !== '')
+      .map((tag) => tag.trim())
       .filter((tag, index, self) => self.indexOf(tag) === index); // Remove duplicates
     setTagList(tags);
   };
 
   return (
-    <main className="mx-auto flex flex-col px-4 pt-12">
+    <main className="container mx-auto flex flex-col pt-4">
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-3">
           <input
@@ -179,7 +179,7 @@ export default function Write() {
             height={500}
             value={content}
             onChange={(value) => setContent(value || '')}
-          />          
+          />
           <ReactSelect
             options={categoryOptions}
             placeholder="카테고리"
@@ -194,7 +194,10 @@ export default function Write() {
           />
           <div className="flex gap-2">
             {tagList.map((tag, index) => (
-              <div key={index} className="text-sm bg-orange-200 rounded-lg px-2 py-1">
+              <div
+                key={index}
+                className="rounded-lg bg-orange-200 px-2 py-1 text-sm"
+              >
                 {tag}
               </div>
             ))}
@@ -208,7 +211,7 @@ export default function Write() {
           {isSubmitting ? '작성 중...' : '작성하기'}
         </button>
       </form>
-      <div className='my-10'></div>
+      <div className="my-10"></div>
     </main>
   );
 }

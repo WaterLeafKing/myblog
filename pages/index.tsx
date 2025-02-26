@@ -1,7 +1,5 @@
 import Category from '@/components/Category';
 import PostArticle from '@/components/PostArticle';
-import QuoteCard from '@/components/QuoteCard';
-import SwipeUI from '@/components/SwipeUI';
 import { createClient } from '@supabase/supabase-js';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
@@ -216,47 +214,33 @@ export default function Home() {
         <meta property="og:url" content="https://nerdinsight.vercel.app" />
         <meta property="og:type" content="website" />
       </Head>
-      <main className="container mx-auto flex flex-col">
-        <div className="mb-4 mt-8 grid w-full grid-cols-3 gap-2">
+      <main className="container mx-auto flex flex-col px-4">
+        {/* <div className="mb-4 mt-8 grid w-full grid-cols-3 gap-2">
           <div className="col-span-3 md:col-span-2">
             <SwipeUI />
           </div>
           <div className="hidden sm:hidden md:grid md:grid-cols-2 md:grid-rows-4 md:gap-2">
-            <div className="flex items-center justify-center rounded-full bg-orange-300 font-light text-white hover:cursor-pointer hover:bg-orange-400">
+            <div className="flex items-center justify-center rounded-md bg-orange-300 font-light text-white hover:cursor-pointer hover:bg-orange-400">
               Who&apos;s Nerd?
             </div>
-            <div className="flex items-center justify-center rounded-full bg-orange-300 font-light  text-white hover:cursor-pointer hover:bg-orange-400">
+            <div className="flex items-center justify-center rounded-md bg-orange-300 font-light  text-white hover:cursor-pointer hover:bg-orange-400">
               Friends
             </div>
-            <div className="flex items-center justify-center rounded-full border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
+            <div className="flex items-center justify-center rounded-md border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
               Feedback
             </div>
-            <div className="flex items-center justify-center rounded-full border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
+            <div className="flex items-center justify-center rounded-md border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
               Privacy Policy
             </div>
             <div className="col-span-2 row-span-2 flex rounded-md border border-slate-300 text-xs italic">
               <QuoteCard quote={quote.quote} speaker={quote.speaker} />
             </div>
           </div>
-          {/* <div id="help" className="hidden md:block lg:block">
-            <div className="flex gap-2">
-              <a
-                href={'/opinion'}
-                className="flex h-12 w-2/3 items-center justify-center rounded-lg border border-gray-300 text-xs text-gray-400 hover:cursor-pointer hover:border hover:border-orange-400 hover:text-orange-400"
-              >
-                <IconButton Icon={BsChatQuote} />
-                <div>의견보내기</div>
-              </a>
-              <div className="flex h-12 w-1/3 items-center justify-center rounded-lg border border-gray-300 text-xs text-gray-400 hover:cursor-pointer hover:border hover:border-orange-400 hover:text-orange-400">
-                <IconButton Icon={CgProfile} />
-              </div>
-            </div>
-          </div> */}
-        </div>
+        </div> */}
         {/* <div className="hidden lg:block">
           <CategoryCardSection categories={CategoryList} />
         </div> */}
-        <div className="w-full">
+        <div className="mt-8 w-full">
           <div className="mb-3">
             <ReactSelect
               className="focus:border focus:border-orange-400"
@@ -297,7 +281,7 @@ export default function Home() {
           >
             {postList.map((item, index) => (
               <div key={index} className="w-full">
-                <a href={'/posts/' + item.id} target="_blank" className="block">
+                <a href={'/posts/' + item.id} className="block">
                   <PostArticle
                     image={item.preview_image_url}
                     title={item.title}

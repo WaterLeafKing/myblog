@@ -1,8 +1,9 @@
 import { cn } from '@/utils/style';
 import Link from 'next/link';
 import { FC } from 'react';
-import { AiFillGithub, AiFillInstagram, AiOutlineClose } from 'react-icons/ai';
+import { AiFillGithub, AiFillInstagram } from 'react-icons/ai';
 import IconButton from './IconComponent';
+import SideBarMenu from './SidebarMenu';
 
 type SidebarProps = {
   close: () => void;
@@ -13,21 +14,15 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
   return (
     <div
       className={cn(
-        'absolute min-h-screen flex-col gap-6 border-r bg-white p-10 pr-6 text-base lg:relative',
-        isOpen ? 'flex' : 'hidden',
+        'fixed min-h-screen flex-col border-r border-slate-200 bg-white hidden lg:flex lg:w-60 pt-4 px-4 mt-14',
       )}
     >
-      <IconButton Icon={AiOutlineClose} onClick={close} />
-
-      <Link href="/" className="w-48 font-medium text-gray-600 hover:underline">
-        홈
-      </Link>
-      <Link href="/" className="w-48 font-medium text-gray-600 hover:underline">
-        태그
-      </Link>
-      <Link href="/" className="w-48 font-medium text-gray-600 hover:underline">
-        Web Development
-      </Link>
+      <SideBarMenu title="Home" href="/" />
+      <SideBarMenu title="Who's Nerd?" href="/" />
+      <SideBarMenu title="Friends" href="/" />
+      <hr />
+      <SideBarMenu title="FeedBack" href="/" />
+      <SideBarMenu title="Privacy Policy" href="/" />
       <div className="mt-10 flex items-center gap-4">
         <IconButton
           Icon={AiFillInstagram}

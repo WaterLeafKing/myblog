@@ -115,18 +115,11 @@ export default function Search() {
             placeholder="please enter your search keyword"
             className="w-full rounded-lg border p-2 outline-none focus:border-gray-500"
           />
-          <button
-            onClick={handleSearch}
-            className="mt-2 w-full rounded-lg bg-slate-400 px-4 py-2 text-white hover:bg-orange-400"
-            disabled={loading}
-          >
-            {loading ? 'Searching...' : 'Search'}
-          </button>
         </div>
         <div className="my-4 text-xs">{postList.length} posts</div>
         <div className="grid w-full grid-cols-3 gap-2">
           {postList.map((item, index) => (
-            <a href={'/posts/' + item.id} key={index} target="_blank">
+            <a href={'/posts/' + item.id} key={index}>
               <PostArticle
                 image={item.preview_image_url}
                 title={item.title}

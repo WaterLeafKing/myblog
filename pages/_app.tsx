@@ -42,8 +42,8 @@ export default function App({ Component, pageProps }: AppProps) {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
-        <div className="flex flex-1 flex-col overflow-y-auto">
-          <main className="flex-1">
+        <div className="flex-1 overflow-y-auto">
+          <main>
             <GoogleAnalytics
               measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!}
             />

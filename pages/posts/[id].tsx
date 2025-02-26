@@ -164,128 +164,124 @@ export default function Post({ id }: PostProps) {
 
   return (
     <>
-      {/* <div
-        id="test"
-        className="fixed left-[calc((100%-900px)/2)] top-28 hidden items-center justify-center lg:block"
-      >
-        <div className="flex size-12 items-center justify-center rounded-full border border-gray-300 hover:cursor-pointer hover:border-gray-600">
-          <BiShareAlt size={24} />
-        </div>
-      </div> */}
-      <div className="container mx-auto my-8 flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
-        {post ? (
-          <>
-            <div className="relative h-full">
-              <div className="absolute inset-0 bottom-4 z-10 flex flex-col items-center justify-end p-4 lg:bottom-8">
-                <div className="flex-row p-2">
-                  {post.tags.map((item, index) => (
-                    <Tag key={index} tag={item.name} />
-                  ))}
+      <main className="container mx-auto flex flex-col px-4">
+        <div className="mt-8 w-full">
+          {post ? (
+            <>
+              <div className="relative h-full">
+                <div className="absolute inset-0 bottom-4 z-10 flex flex-col items-center justify-end p-4 lg:bottom-8">
+                  <div className="flex-row p-2">
+                    {post.tags.map((item, index) => (
+                      <Tag key={index} tag={item.name} />
+                    ))}
+                  </div>
+                  <div className="break-keep text-center text-xl font-medium text-white lg:text-3xl">
+                    {post.title}
+                  </div>
                 </div>
-                <div className="break-keep text-center text-xl font-medium text-white lg:text-3xl">
-                  {post.title}
-                </div>
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
+                <img
+                  src={post.preview_image_url}
+                  alt={`Preview image for ${post.title}`}
+                  className="h-[300px] w-full rounded-lg object-cover lg:h-[420px]"
+                />
               </div>
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
-              <img
-                src={post.preview_image_url}
-                alt={`Preview image for ${post.title}`}
-                className="h-[300px] w-full rounded-lg object-cover lg:h-[420px]"
-              />
-            </div>
-            <div className="relative mt-8">
-              <div
-                id="tableofcontents"
-                className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[980px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
-              >
-                <h3 className="mb-2 text-xl font-medium">Table of Contents</h3>
-                <nav className="relative">
-                  <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
-
-                  {headings.map((heading, index) => (
-                    <a
-                      key={index}
-                      href={`#${generateHeadingId(heading.text)}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToHeading(heading.text);
-                      }}
-                      className={`group relative flex items-center ${
-                        heading.level === 2 ? 'ml-4' : 'ml-4'
-                      } mb-1`}
-                    >
-                      <span
-                        className={`absolute -left-[13.6px] z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
-                          activeHeading === generateHeadingId(heading.text)
-                            ? 'bg-orange-400'
-                            : 'bg-slate-600 group-hover:bg-orange-400'
-                        }`}
-                      />
-                      <span
-                        className={`ml-4 transition-colors ${
-                          activeHeading === generateHeadingId(heading.text)
-                            ? 'text-orange-400'
-                            : 'text-slate-600 group-hover:text-orange-400'
-                        }`}
-                      >
-                        {heading.text}
-                      </span>
-                    </a>
-                  ))}
-                </nav>
-                <a
-                  href="#comment-input"
-                  className="ml-1 text-sm text-slate-600 hover:text-orange-400"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToHeading('comment-input');
-                  }}
+              <div className="relative mt-8">
+                <div
+                  id="tableofcontents"
+                  className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[1000px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
                 >
-                  Comments
-                </a>
+                  <h3 className="mb-2 text-xl font-medium">
+                    Table of Contents
+                  </h3>
+                  <nav className="relative">
+                    <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
+
+                    {headings.map((heading, index) => (
+                      <a
+                        key={index}
+                        href={`#${generateHeadingId(heading.text)}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToHeading(heading.text);
+                        }}
+                        className={`group relative flex items-center ${
+                          heading.level === 2 ? 'ml-4' : 'ml-4'
+                        } mb-1`}
+                      >
+                        <span
+                          className={`absolute -left-[13.6px] z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
+                            activeHeading === generateHeadingId(heading.text)
+                              ? 'bg-orange-400'
+                              : 'bg-slate-600 group-hover:bg-orange-400'
+                          }`}
+                        />
+                        <span
+                          className={`ml-4 transition-colors ${
+                            activeHeading === generateHeadingId(heading.text)
+                              ? 'text-orange-400'
+                              : 'text-slate-600 group-hover:text-orange-400'
+                          }`}
+                        >
+                          {heading.text}
+                        </span>
+                      </a>
+                    ))}
+                  </nav>
+                  <a
+                    href="#comment-input"
+                    className="ml-1 text-sm text-slate-600 hover:text-orange-400"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToHeading('comment-input');
+                    }}
+                  >
+                    Comments
+                  </a>
+                </div>
+                <MarkdownViewer
+                  source={post.content}
+                  components={{
+                    h1: ({ children }) => {
+                      console.log('h1 children:', children);
+                      const headingText = Array.isArray(children)
+                        ? children[1]
+                        : String(children);
+                      return (
+                        <h1 id={generateHeadingId(headingText)}>{children}</h1>
+                      );
+                    },
+                    h2: ({ children }) => {
+                      console.log('h2 children:', children);
+                      const headingText = Array.isArray(children)
+                        ? children[1]
+                        : String(children);
+                      return (
+                        <h2 id={generateHeadingId(headingText)}>{children}</h2>
+                      );
+                    },
+                  }}
+                />
               </div>
-              <MarkdownViewer
-                source={post.content}
-                components={{
-                  h1: ({ children }) => {
-                    console.log('h1 children:', children);
-                    const headingText = Array.isArray(children)
-                      ? children[1]
-                      : String(children);
-                    return (
-                      <h1 id={generateHeadingId(headingText)}>{children}</h1>
-                    );
-                  },
-                  h2: ({ children }) => {
-                    console.log('h2 children:', children);
-                    const headingText = Array.isArray(children)
-                      ? children[1]
-                      : String(children);
-                    return (
-                      <h2 id={generateHeadingId(headingText)}>{children}</h2>
-                    );
-                  },
-                }}
-              />
-            </div>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <div className="mt-12 font-bold">{commentList.length} comments</div>
-        <div className="my-4" id="comment-input">
-          <CommentInput postId={id} onAddComment={handleAddComment} />
+            </>
+          ) : (
+            <p>Loading...</p>
+          )}
+          <div className="mt-12 font-bold">{commentList.length} comments</div>
+          <div className="my-4" id="comment-input">
+            <CommentInput postId={id} onAddComment={handleAddComment} />
+          </div>
+          {commentList.map((item, index) => (
+            <CommentCard
+              key={index}
+              comment={item.comment}
+              comment_created_at={item.created_at}
+              sub_id={item.sub_id}
+            />
+          ))}
+          <div className="my-8"></div>
         </div>
-        {commentList.map((item, index) => (
-          <CommentCard
-            key={index}
-            comment={item.comment}
-            comment_created_at={item.created_at}
-            sub_id={item.sub_id}
-          />
-        ))}
-        <div className="my-8"></div>
-      </div>
+      </main>
     </>
   );
 }

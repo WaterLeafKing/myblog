@@ -18,13 +18,13 @@ const PostArticle: FC<PostArticleProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-2">
-      <figure className="relative h-48 shrink-0 rounded-md border border-gray-200 md:h-40 lg:h-44">
+      <div className="relative h-44 shrink-0 overflow-hidden rounded-md border border-slate-200 md:h-40 lg:h-44">
         <img
-          className="size-full h-48 rounded-md object-cover transition-opacity md:h-40 lg:h-44 lg:duration-300 lg:hover:opacity-80"
+          className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
           src={image}
           alt={title}
         />
-      </figure>
+      </div>
       <div
         id="content_text"
         className="relative flex w-full flex-col justify-center"

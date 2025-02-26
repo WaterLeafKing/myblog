@@ -1,8 +1,5 @@
 import { cn } from '@/utils/style';
-import Link from 'next/link';
 import { FC } from 'react';
-import { AiFillGithub, AiFillInstagram } from 'react-icons/ai';
-import IconButton from './IconComponent';
 import SideBarMenu from './SidebarMenu';
 
 type SidebarProps = {
@@ -20,10 +17,10 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
       <SideBarMenu title="Home" href="/" />
       <SideBarMenu title="Who's Nerd?" href="/" />
       <SideBarMenu title="Friends" href="/" />
-      <hr />
+      <hr className="my-2" />
       <SideBarMenu title="FeedBack" href="/" />
       <SideBarMenu title="Privacy Policy" href="/" />
-      <div className="mt-10 flex items-center gap-4">
+      {/* <div className="mt-10 flex items-center gap-4">
         <IconButton
           Icon={AiFillInstagram}
           component={Link}
@@ -36,7 +33,7 @@ const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
           href="https://www.instargram.com"
           target="_blank"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

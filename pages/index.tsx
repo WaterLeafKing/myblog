@@ -215,38 +215,14 @@ export default function Home() {
         <meta property="og:type" content="website" />
       </Head>
       <main className="container mx-auto flex flex-col px-4">
-        {/* <div className="mb-4 mt-8 grid w-full grid-cols-3 gap-2">
-          <div className="col-span-3 md:col-span-2">
-            <SwipeUI />
-          </div>
-          <div className="hidden sm:hidden md:grid md:grid-cols-2 md:grid-rows-4 md:gap-2">
-            <div className="flex items-center justify-center rounded-md bg-orange-300 font-light text-white hover:cursor-pointer hover:bg-orange-400">
-              Who&apos;s Nerd?
-            </div>
-            <div className="flex items-center justify-center rounded-md bg-orange-300 font-light  text-white hover:cursor-pointer hover:bg-orange-400">
-              Friends
-            </div>
-            <div className="flex items-center justify-center rounded-md border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
-              Feedback
-            </div>
-            <div className="flex items-center justify-center rounded-md border border-slate-300 text-sm font-light hover:cursor-pointer hover:bg-slate-100">
-              Privacy Policy
-            </div>
-            <div className="col-span-2 row-span-2 flex rounded-md border border-slate-300 text-xs italic">
-              <QuoteCard quote={quote.quote} speaker={quote.speaker} />
-            </div>
-          </div>
-        </div> */}
-        {/* <div className="hidden lg:block">
-          <CategoryCardSection categories={CategoryList} />
-        </div> */}
-        <div className="mt-8 w-full">
+        <div className="mt-4 w-full">
           <div className="mb-3">
             <ReactSelect
-              className="focus:border focus:border-orange-400"
+              className="w-[160px] text-xs hover:cursor-pointer hover:rounded-full hover:bg-orange-200 focus:border focus:border-orange-400"
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
+                  border: 'none',
                   borderColor: state.isFocused
                     ? '#fb923c'
                     : baseStyles.borderColor,
@@ -255,6 +231,8 @@ export default function Home() {
                   },
                   boxShadow: state.isFocused ? '0 0 0 1px #ffffff' : 'none',
                   color: '#777777',
+                  caretColor: 'transparent',
+                  cursor: 'pointer',
                 }),
                 option: (baseStyles, state) => ({
                   ...baseStyles,
@@ -263,6 +241,7 @@ export default function Home() {
                     backgroundColor: state.isSelected ? '#fb923c' : '#fff8f1',
                   },
                   color: state.isSelected ? 'white' : '#777777',
+                  cursor: 'pointer',
                 }),
                 singleValue: (baseStyles) => ({
                   ...baseStyles,

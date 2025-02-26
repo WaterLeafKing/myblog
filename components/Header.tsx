@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 
 type HeaderProps = {
@@ -53,6 +54,8 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
   const [postList, setPostList] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleSearch = async () => {
     if (searchQuery.trim().length <= 0) {
       return;
@@ -104,8 +107,8 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+    if (e.key === 'Enter' && searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
@@ -114,8 +117,8 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
       <Link href="/">
         <h1 className="font-['Futura'] text-xl tracking-wider text-slate-500 md:text-xl lg:text-2xl">
           <span className="font-bold text-orange-600">N</span>
-          <span className="font-extralight">erd</span>
-          <span className="font-extralight">In</span>Sight
+          <span className="font-thin">erd</span>
+          <span className="font-thin">In</span>Sight
         </h1>
       </Link>
       <div className="mx-auto flex">
@@ -124,8 +127,8 @@ const Header: FC<HeaderProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyPress}
-            placeholder="search"
+            onKeyPress={handleKeyPress}
+            placeholder="Search"
             className="w-full rounded-full border border-white bg-slate-200 p-2 pl-8 outline-none focus:border-orange-300 lg:w-96"
           />
         </div>

@@ -19,7 +19,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
   return (
     <div
       className={`
-        fixed z-20 mt-14 min-h-screen w-60 flex-col border-r border-slate-200 bg-white px-2 pt-4 lg:mt-14 lg:flex ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        fixed z-20 mt-14 min-h-screen w-60 flex-col border-r border-slate-200 bg-white px-2 pt-4 lg:mt-14 lg:flex lg:w-60
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+        transition-transform duration-500 ease-in-out
       `}
     >
       <Link href="/">

@@ -21,6 +21,8 @@ export default function WhosNerd() {
             <p className="text-lg text-orange-600">
               Let&apos;s grow up together!
             </p>
+            <br />
+            Here are my Identities below.
           </div>
         </div>
         <div className="grid grid-cols-2">

@@ -256,7 +256,7 @@ export default function Home() {
           </div>
           <div
             id="post_list"
-            className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3"
+            className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2  lg:grid-cols-3"
           >
             {postList.map((item, index) => (
               <div key={index} className="w-full">

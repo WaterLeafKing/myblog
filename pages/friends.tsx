@@ -9,7 +9,9 @@ export default function Friends() {
         <div className="grid gap-2">
           <div className="grid grid-cols-6">
             <div className="py-2 text-center">Paka</div>
-            <div className="col-span-4 py-2">크로아티아인의 한국 주부생활</div>
+            <div className="col-span-4 py-2 text-slate-600">
+              크로아티아인의 한국 주부생활
+            </div>
             <a
               className="rounded-md bg-green-400 py-2 text-center text-white hover:bg-orange-400"
               href="https://m.blog.naver.com/micamaca?tab=1"
@@ -20,7 +22,7 @@ export default function Friends() {
           </div>
           <div className="grid grid-cols-6">
             <div className="py-2 text-center">헤요미</div>
-            <div className="col-span-4 py-2">당신의 헤요미</div>
+            <div className="col-span-4 py-2 text-slate-600">당신의 헤요미</div>
             <a
               className="rounded-md bg-green-400 py-2 text-center text-white hover:bg-orange-400"
               href="https://blog.naver.com/khy2106"

@@ -4,11 +4,8 @@ import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Inter } from 'next/font/google';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
-const inter = Inter({ subsets: ['latin'] });
 
 declare global {
   interface Window {
@@ -34,14 +31,15 @@ export default function App({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="flex h-screen w-screen text-sm lg:text-base">
-      <Sidebar isOpen={isSidebarOpen} close={() => setIsSidebarOpen(false)} />
+      <Sidebar isOpen={isSidebarOpen} />
       <div className="flex flex-1 flex-col">
-        <Header
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
-        />
+        <Header toggleSidebar={toggleSidebar} />
         <div className="flex-1 overflow-y-auto">
           <main>
             <GoogleAnalytics

@@ -1,4 +1,3 @@
-import { cn } from '@/utils/style';
 import Link from 'next/link';
 import { FC } from 'react';
 import {
@@ -11,16 +10,17 @@ import {
 import SideBarMenu from './SidebarMenu';
 
 type SidebarProps = {
-  close: () => void;
   isOpen: boolean;
 };
 
-const Sidebar: FC<SidebarProps> = ({ close, isOpen }) => {
+const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
+  if (!isOpen) return null;
+
   return (
     <div
-      className={cn(
-        'fixed min-h-screen flex-col border-r border-slate-200 bg-white hidden lg:flex lg:w-60 pt-4 px-2 mt-14 w-96',
-      )}
+      className={`
+        fixed z-20 mt-14 min-h-screen w-60 flex-col border-r border-slate-200 bg-white px-2 pt-4 lg:mt-14 lg:flex ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}
     >
       <Link href="/">
         <SideBarMenu title="Home" icon={AiOutlineHome} />

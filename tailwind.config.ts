@@ -10,6 +10,7 @@ const config: Config = {
       lg: '1024px',
       md: '768px',
       sm: '640px',
+      custom: '420px',
     },
     extend: {},
   },

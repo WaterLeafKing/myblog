@@ -17,23 +17,26 @@ const PostArticle: FC<PostArticleProps> = ({
   duration_time,
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       <div className="relative h-44 shrink-0 overflow-hidden rounded-md border border-slate-200 md:h-40 lg:h-44">
         <img
           className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
           src={image}
           alt={title}
         />
+        <div className="absolute left-2 top-2 rounded-full bg-green-500 px-2 py-1 text-xs font-light text-white opacity-85">
+          {category}
+        </div>
       </div>
       <div
         id="content_text"
-        className="relative flex w-full flex-col justify-center"
+        className="relative flex w-full flex-col justify-center pl-1"
       >
         <div>
           {tags.map((item, index) => (
             <span
               key={index}
-              className="mr-2 text-[10px] font-thin text-slate-900"
+              className="mr-2 text-[11px] font-thin text-slate-900"
             >
               {item.name}
             </span>

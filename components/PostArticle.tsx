@@ -30,15 +30,17 @@ const PostArticle: FC<PostArticleProps> = ({
       </div>
       <div
         id="content_text"
-        className="relative flex w-full flex-col justify-center pl-1"
+        className="relative flex w-full flex-col justify-center"
       >
         <div>
           {tags.map((item, index) => (
-            <span
-              key={index}
-              className="mr-2 text-[11px] font-thin text-slate-900"
-            >
-              {item.name}
+            <span key={index}>
+              <span className="text-[11px] font-thin text-slate-900">
+                {item.name}
+              </span>
+              {index < tags.length - 1 && (
+                <span className="mx-1 text-[8px] text-slate-400">•</span>
+              )}
             </span>
           ))}
         </div>

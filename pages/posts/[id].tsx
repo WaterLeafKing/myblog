@@ -172,18 +172,23 @@ export default function Post({ id }: PostProps) {
                 <div className="absolute inset-0 bottom-4 z-10 flex flex-col items-center justify-end p-4 lg:bottom-8">
                   <div className="flex-row p-2">
                     {post.tags.map((item, index) => (
-                      <Tag key={index} tag={item.name} />
+                      <>
+                        <Tag key={index} tag={item.name} />
+                        {index < post.tags.length - 1 && (
+                          <span className="mx-1 text-[8px] text-white">•</span>
+                        )}
+                      </>
                     ))}
                   </div>
                   <div className="break-keep text-center text-xl font-medium text-white lg:text-3xl">
                     {post.title}
                   </div>
                 </div>
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/70"></div>
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/60"></div>
                 <img
                   src={post.preview_image_url}
                   alt={`Preview image for ${post.title}`}
-                  className={`h-[300px] w-full rounded-lg object-cover md:h-[420px] lg:h-[480px] ${
+                  className={`h-[300px] w-full rounded-lg object-cover md:h-[420px] lg:h-[520px] ${
                     post.preview_image_url.endsWith('.png')
                       ? 'bg-white object-contain'
                       : ''

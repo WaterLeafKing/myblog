@@ -119,7 +119,7 @@ const Search = () => {
     <main className="container mx-auto flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
       <div className="my-8">
         <div className="mb-4 text-xs">{postList.length} posts</div>
-        <div className="grid w-full grid-cols-3 gap-2">
+        <div className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2  lg:grid-cols-3">
           {postList.map((item, index) => (
             <a href={'/posts/' + item.id} key={index}>
               <PostArticle

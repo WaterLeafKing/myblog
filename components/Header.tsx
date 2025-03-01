@@ -49,10 +49,18 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    router.push({
-      pathname: '/search',
-      query: { q: searchQuery },
-    });
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery) {
+      router.push({
+        pathname: '/search',
+        query: { q: trimmedQuery },
+      });
+      setSearchQuery(trimmedQuery);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value.trimStart());
   };
 
   const toggleSidebar_inside = () => {
@@ -61,7 +69,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
 
   return (
     <header className="flex h-14 items-center border-b px-4 lg:px-4">
-      <div className="mr-3 flex items-center lg:hidden">
+      <div className="mr-3 flex items-center hover:cursor-pointer lg:hidden">
         <AiOutlineMenu size={24} onClick={toggleSidebar_inside} />
       </div>
       <Link href="/">
@@ -78,7 +86,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={handleChange}
               placeholder="Search"
               className="w-full rounded-full border border-white bg-slate-200 p-2 pl-8 outline-none focus:border-orange-300 lg:w-96"
             />

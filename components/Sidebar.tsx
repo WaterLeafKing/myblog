@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   AiOutlineFileProtect,
   AiOutlineHome,
@@ -16,6 +16,12 @@ type SidebarProps = {
 };
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Prevent body scroll when sidebar is open
   useEffect(() => {
     if (isOpen) {
@@ -32,7 +38,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 md:relative md:translate-x-0`}>
+    <div
+      className={`fixed inset-0 z-50 transition-all duration-700 ease-in-out md:relative${mounted ? (isOpen ? 'left-0' : '-left-60') : '-left-60'} md:static`}
+    >
       {/* Overlay - only exists on mobile */}
       <div
         className="absolute inset-0 bg-black/20 md:hidden"
@@ -40,9 +48,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
       />
 
       {/* Sidebar content */}
-      <div className="absolute left-0 h-full w-64 bg-white lg:top-14 lg:border-r lg:border-slate-200">
+      <div className="absolute left-0 h-full w-60 bg-white lg:top-14 lg:border-r lg:border-slate-200">
         <div className="flex h-14 items-center border-b px-4 lg:hidden lg:px-4">
-          <div className="mr-3 flex items-center lg:hidden">
+          <div className="mr-3 flex items-center hover:cursor-pointer lg:hidden">
             <AiOutlineMenu size={24} onClick={onClose} />
           </div>
           <Link href="/">

@@ -24,7 +24,7 @@ const PostArticle: FC<PostArticleProps> = ({
           src={image}
           alt={title}
         />
-        <div className="absolute left-2 top-2 rounded-full bg-green-500 px-2 py-1 text-xs font-light text-white opacity-85">
+        <div className="absolute left-2 top-2 rounded-full bg-black px-2 text-[9px] font-extralight text-white opacity-70">
           {category}
         </div>
       </div>

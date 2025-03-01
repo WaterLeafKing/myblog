@@ -1,7 +1,8 @@
 import PostArticle from '@/components/PostArticle';
 import { createClient } from '@supabase/supabase-js';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { SearchContext } from './_app';
 
 interface Post {
   id: number;
@@ -43,22 +44,20 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export default function Search() {
+const Search = () => {
   const router = useRouter();
-  const { q } = router.query; // 'q' is the query parameter we set in Header.tsx
+  const { q } = router.query; // This will persist across refreshes
 
-  const [searchQuery, setSearchQuery] = useState(
-    typeof q === 'string' ? q : '',
-  );
+  const { searchQuery } = useContext(SearchContext);
 
   const [postList, setPostList] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (typeof q === 'string' && q.trim()) {
+    if (q) {
       handleSearch();
     }
-  }, [q]); // Add handleSearch to dependencies
+  }, [q]);
 
   const handleSearch = useCallback(async () => {
     if (searchQuery.trim().length <= 0) {
@@ -108,7 +107,7 @@ export default function Search() {
     } finally {
       setLoading(false);
     }
-  }, [searchQuery]); // Add searchQuery as dependency
+  }, [searchQuery]);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -137,4 +136,6 @@ export default function Search() {
       </div>
     </main>
   );
-}
+};
+
+export default Search;

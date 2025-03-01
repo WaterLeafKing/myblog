@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, useState } from 'react';
+import { FC, useContext } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
+import { SearchContext } from '../pages/_app';
 
 type HeaderProps = {
   toggleSidebar: () => void;
@@ -43,14 +44,15 @@ interface PostWithJoins {
 }
 
 const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
   const router = useRouter();
+  const { searchQuery, setSearchQuery } = useContext(SearchContext);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push({
+      pathname: '/search',
+      query: { q: searchQuery },
+    });
   };
 
   const toggleSidebar_inside = () => {
@@ -59,7 +61,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
 
   return (
     <header className="flex h-14 items-center border-b px-4 lg:px-4">
-      <div className="mr-4 flex items-center lg:hidden">
+      <div className="mr-3 flex items-center lg:hidden">
         <AiOutlineMenu size={24} onClick={toggleSidebar_inside} />
       </div>
       <Link href="/">
@@ -72,14 +74,15 @@ const Header: FC<HeaderProps> = ({ toggleSidebar }) => {
       </Link>
       <div className="mx-auto flex">
         <div className="">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Search"
-            className="w-full rounded-full border border-white bg-slate-200 p-2 pl-8 outline-none focus:border-orange-300 lg:w-96"
-          />
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search"
+              className="w-full rounded-full border border-white bg-slate-200 p-2 pl-8 outline-none focus:border-orange-300 lg:w-96"
+            />
+          </form>
         </div>
       </div>
     </header>

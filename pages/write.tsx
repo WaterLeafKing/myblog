@@ -22,6 +22,9 @@ export default function Write() {
   const [tagList, setTagList] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [uploading, setUploading] = useState(false);
 
   const fetchCategoryList = async () => {
     const { data, error } = await supabase
@@ -55,14 +58,14 @@ export default function Write() {
 
     // Validate required fields
     if (!title || !content || !thumbnail) {
-      alert('제목과 썸네일, 내용을 입력해주세요.');
+      alert('Title, Thumbnail, Content is required');
       setIsSubmitting(false);
       return;
     }
 
     // Validate required fields
     if (selectedCategory == null) {
-      alert('카테고리를 선택해주세요.');
+      alert('select Category');
       setIsSubmitting(false);
       return;
     }
@@ -79,7 +82,7 @@ export default function Write() {
       console.log('Category Check Result:', { categoryExists, categoryError }); // Debug log
 
       if (!categoryExists) {
-        alert('선택한 카테고리가 존재하지 않습니다.');
+        alert('No Category exists');
         setIsSubmitting(false);
         return;
       }
@@ -140,10 +143,10 @@ export default function Write() {
       setThumbnail('');
       setSelectedCategory(null);
       setTagList([]);
-      alert('게시글이 성공적으로 작성되었습니다.');
+      alert('success');
     } catch (error) {
       console.error('Error inserting post:', error);
-      alert('게시글 작성 중 오류가 발생했습니다.');
+      alert('error');
     } finally {
       setIsSubmitting(false);
     }

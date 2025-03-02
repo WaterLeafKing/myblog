@@ -22,12 +22,6 @@ interface Category {
   icon: string;
 }
 
-interface Quote {
-  id: number;
-  quote: string;
-  speaker: string;
-}
-
 interface PostWithJoins {
   id: number;
   preview_image_url: string;
@@ -54,7 +48,6 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export default function Home() {
   const [postList, setPostList] = useState<Post[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [quote, setQuote] = useState<Quote>({ id: -1, quote: '', speaker: '' });
   const [loading, setLoading] = useState(false);
 
   const fetchPostList = async () => {
@@ -116,29 +109,10 @@ export default function Home() {
     }
   };
 
-  const fetchQuote = async () => {
-    const { data, error } = await supabase.rpc('get_random_quote');
-
-    if (error) {
-      console.error('Supabase error:', error);
-    } else {
-      if (!data || data.length === 0) {
-        console.log('No quote found in the database');
-      }
-      console.log(data);
-      setQuote(data[0]);
-    }
-  };
-
   useEffect(() => {
     fetchPostList();
     fetchCategoryList();
-    fetchQuote();
   }, []);
-
-  useEffect(() => {
-    console.log(quote);
-  }, [quote]);
 
   // Transform CategoryList into ReactSelect options format
   const categoryOptions = [

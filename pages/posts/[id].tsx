@@ -252,7 +252,6 @@ export default function Post({ id }: PostProps) {
                   source={post.content}
                   components={{
                     h1: ({ children }) => {
-                      console.log('h1 children:', children);
                       const headingText = Array.isArray(children)
                         ? children[1]
                         : String(children);
@@ -261,7 +260,6 @@ export default function Post({ id }: PostProps) {
                       );
                     },
                     h2: ({ children }) => {
-                      console.log('h2 children:', children);
                       const headingText = Array.isArray(children)
                         ? children[1]
                         : String(children);

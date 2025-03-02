@@ -127,7 +127,12 @@ export default function Post({ id }: PostProps) {
   };
 
   const generateHeadingId = (text: string) => {
-    return text.toLowerCase().replace(/\s+/g, '-');
+    return text
+      .toLowerCase()
+      .replace(/'/g, '')
+      .replace(/[^a-z0-9]+/g, '-') // Replace all non-alphanumeric chars (including spaces, dots, commas) with hyphen
+      .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+      .trim(); // R
   };
 
   const scrollToHeading = (headingText: string) => {
@@ -248,27 +253,7 @@ export default function Post({ id }: PostProps) {
                     Comments
                   </a>
                 </div>
-                <MarkdownViewer
-                  source={post.content}
-                  components={{
-                    h1: ({ children }) => {
-                      const headingText = Array.isArray(children)
-                        ? children[1]
-                        : String(children);
-                      return (
-                        <h1 id={generateHeadingId(headingText)}>{children}</h1>
-                      );
-                    },
-                    h2: ({ children }) => {
-                      const headingText = Array.isArray(children)
-                        ? children[1]
-                        : String(children);
-                      return (
-                        <h2 id={generateHeadingId(headingText)}>{children}</h2>
-                      );
-                    },
-                  }}
-                />
+                <MarkdownViewer source={post.content} components={{}} />
               </div>
             </>
           ) : (

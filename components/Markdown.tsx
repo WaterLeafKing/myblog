@@ -19,7 +19,6 @@ export const MarkdownEditor = ({ ...rest }: MDEditorProps) => (
 );
 
 export const MarkdownViewer = ({ ...rest }: MarkdownPreviewProps) => {
-  // Function to extract YouTube video ID
   const getYouTubeId = (url: string) => {
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -27,11 +26,32 @@ export const MarkdownViewer = ({ ...rest }: MarkdownPreviewProps) => {
     return match && match[2].length === 11 ? match[2] : null;
   };
 
+  // Function to create clean IDs from heading text
+  const createHeadingId = (text: string) => {
+    return String(text)
+      .toLowerCase()
+      .replace(/'/g, '')
+      .replace(/[^a-z0-9]+/g, '-') // Replace all non-alphanumeric chars (including spaces, dots, commas) with hyphen
+      .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+      .trim(); // Remove any remaining whitespace
+  };
+
   return (
     <div data-color-mode="light">
       <MDViewer
         {...rest}
         components={{
+          ...rest.components,
+          h1: ({ children, ...props }) => (
+            <h1 id={createHeadingId(children as string)} {...props}>
+              {children}
+            </h1>
+          ),
+          h2: ({ children, ...props }) => (
+            <h2 id={createHeadingId(children as string)} {...props}>
+              {children}
+            </h2>
+          ),
           a: ({ href, children }) => {
             const videoId = href && getYouTubeId(href);
             if (videoId) {

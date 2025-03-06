@@ -4,6 +4,7 @@ import { MarkdownViewer } from '@/components/Markdown';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 type PostProps = {
@@ -190,16 +191,16 @@ export default function Post({ id }: PostProps) {
                   </div>
                 </div>
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent via-transparent to-black/60"></div>
-                <img
+                <Image
                   src={post.preview_image_url}
-                  alt={`Preview image for ${post.title}`}
-                  className={`h-[300px] w-full rounded-lg object-cover md:h-[420px] lg:h-[520px] ${
-                    post.preview_image_url.endsWith('.png')
-                      ? 'bg-white object-contain'
-                      : ''
-                  }`}
+                  width={1200}
+                  height={675}
+                  alt={post.title}
+                  priority
+                  className="h-[300px] w-full rounded-lg object-cover md:h-[420px] lg:h-[520px]"
                 />
               </div>
+
               <div className="relative mt-8">
                 <div
                   id="tableofcontents"

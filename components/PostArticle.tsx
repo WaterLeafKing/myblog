@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { FC } from 'react';
 
 type PostArticleProps = {
@@ -19,10 +20,17 @@ const PostArticle: FC<PostArticleProps> = ({
   return (
     <div className="flex flex-col">
       <div className="relative h-44 shrink-0 overflow-hidden rounded-md border border-slate-200 md:h-40 lg:h-44">
-        <img
+        {/* <img
           className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
           src={image}
           alt={title}
+        /> */}
+        <Image
+          src={image}
+          width={1920}
+          height={1080}
+          alt={title}
+          className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
         />
         <div className="absolute left-2 top-2 rounded-full bg-black px-2 text-[9px] font-extralight text-white opacity-70">
           {category}

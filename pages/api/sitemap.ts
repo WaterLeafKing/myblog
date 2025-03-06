@@ -25,6 +25,21 @@ export default async function handler(
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
       </url>
+      <url>
+        <loc>${process.env.NEXT_PUBLIC_SITE_URL}/posts</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+      </url>
+      <url>
+        <loc>${process.env.NEXT_PUBLIC_SITE_URL}/whos-nerd</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+      </url>
+      <url>
+        <loc>${process.env.NEXT_PUBLIC_SITE_URL}/friend</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+      </url>
       ${posts
         ?.map(
           (post) => `
@@ -32,7 +47,7 @@ export default async function handler(
           <loc>${process.env.NEXT_PUBLIC_SITE_URL}/posts/${post.id}</loc>
           <lastmod>${post.created_at}</lastmod>
           <changefreq>weekly</changefreq>
-          <priority>0.8</priority>
+          <priority>0.6</priority>
         </url>
       `,
         )

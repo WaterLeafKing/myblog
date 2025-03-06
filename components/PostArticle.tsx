@@ -27,8 +27,8 @@ const PostArticle: FC<PostArticleProps> = ({
         /> */}
         <Image
           src={image}
-          width={1920}
-          height={1080}
+          width={400}
+          height={255}
           alt={title}
           className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
         />

@@ -8,7 +8,6 @@ import {
   AiOutlineQuestionCircle,
   AiOutlineTeam,
 } from 'react-icons/ai';
-import { GrAnalytics } from 'react-icons/gr';
 import SideBarMenu from './SidebarMenu';
 
 type SidebarProps = {
@@ -74,9 +73,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
           <Link href="/friends">
             <SideBarMenu title="Friends" icon={AiOutlineTeam} />
           </Link>
-          <Link href="/analytics">
+          {/* <Link href="/analytics">
             <SideBarMenu title="Analytics" icon={GrAnalytics} />
-          </Link>
+          </Link> */}
           <hr className="my-2" />
           <SideBarMenu title="FeedBack" icon={AiOutlineMessage} />
           <SideBarMenu title="Privacy Policy" icon={AiOutlineFileProtect} />

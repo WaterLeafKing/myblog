@@ -1,6 +1,7 @@
 import CommentCard from '@/components/CommentCard';
 import CommentInput from '@/components/CommentInput';
 import { MarkdownViewer } from '@/components/Markdown';
+import SEO from '@/components/SEO';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
 import { GetServerSideProps } from 'next';
@@ -170,6 +171,12 @@ export default function Post({ id }: PostProps) {
 
   return (
     <>
+      <SEO
+        title={post?.title || ''}
+        description={post?.content.substring(0, 160) || ''} // First 160 characters as description
+        image={post?.preview_image_url || ''}
+        url={`/posts/${id}`}
+      />
       <main className="container mx-auto flex flex-col px-4">
         <div className="mt-8 w-full">
           {post ? (

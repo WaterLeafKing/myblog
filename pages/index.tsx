@@ -182,11 +182,17 @@ export default function Home() {
     <>
       <Head>
         <title>NerdInSight</title>
-        <meta name="description" content="Blog for Journey of Nerd" />
-        <meta property="og:title" content="NerdInSight" />
-        <meta property="og:description" content="Blog for Journey of Nerd" />
-        <meta property="og:url" content="https://nerdinsight.vercel.app" />
+        <meta
+          name="description"
+          content="Life, Tech, Travel, Grit, Growing Up, Self Development Blog of Nerd"
+        />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content="NerdInSight" />
+        <meta
+          property="og:description"
+          content="Life, Tech, Travel, Grit, Growing Up, Self Development Blog of Nerd"
+        />
+        <meta property="og:url" content="https://nerdinsight.vercel.app" />
       </Head>
       <main className="container mx-auto flex flex-col px-4">
         <div className="mt-4 w-full">

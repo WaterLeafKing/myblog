@@ -1,38 +1,62 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
+const { writeFileSync } = require('fs');
+const { createClient } = require('@supabase/supabase-js');
 
-export async function generateSitemap(domain: string) {
-  // Get the current date for lastmod
-  const date = new Date().toISOString();
+interface Post {
+  id: number;
+  created_at: string;
+  updated_at: string;
+}
 
-  // Create the XML structure
+async function generateSitemap(domain: string) {
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    throw new Error('Missing Supabase environment variables');
+  }
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+
+  const { data: posts, error } = await supabase
+    .from('Post')
+    .select('id, created_at');
+
+  if (error) {
+    console.error('Error fetching posts:', error);
+    return;
+  }
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
         <loc>${domain}</loc>
-        <lastmod>${date}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
       </url>
-      <url>
-        <loc>${domain}/blog</loc>
-        <lastmod>${date}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-      </url>
-      <!-- Add more static routes as needed -->
+      ${posts
+        ?.map(
+          (post: Post) => `
+        <url>
+          <loc>${domain}/posts/${post.id}</loc>
+          <lastmod>${post.created_at}</lastmod>
+          <changefreq>weekly</changefreq>
+          <priority>0.8</priority>
+        </url>
+      `,
+        )
+        .join('')}
     </urlset>`;
 
-  return sitemap;
+  writeFileSync('public/sitemap.xml', sitemap);
+  console.log('Sitemap generated successfully at public/sitemap.xml');
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  const domain = 'https://nerdinsight.vercel.app';
-  const sitemap = await generateSitemap(domain);
-
-  res.setHeader('Content-Type', 'text/xml');
-  res.write(sitemap);
-  res.end();
-}
+// Run the function with your domain
+generateSitemap(process.env.NEXT_PUBLIC_SITE_URL as string).catch(
+  console.error,
+);

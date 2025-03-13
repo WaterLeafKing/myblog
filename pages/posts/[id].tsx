@@ -4,21 +4,29 @@ import { MarkdownViewer } from '@/components/Markdown';
 import SEO from '@/components/SEO';
 import Tag from '@/components/Tag';
 import { createClient } from '@supabase/supabase-js';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-type PostProps = {
-  id: number;
-};
-
 interface Post {
   id: number;
-  preview_image_url: string;
   title: string;
   content: string;
   created_at: string;
-  tags: { tag_id: number; name: string }[];
+  preview_image_url: string;
+  Category: {
+    title: string;
+  };
+  PostTag: {
+    Tag: {
+      name: string;
+    };
+  }[];
+  duration_time: number;
+}
+
+interface PostPageProps {
+  post: Post;
 }
 
 interface Comment {
@@ -33,8 +41,60 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export default function Post({ id }: PostProps) {
-  const [post, setPost] = useState<Post>();
+export const getStaticPaths: GetStaticPaths = async () => {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const { data: posts } = await supabase
+    .from('Post')
+    .select('id');
+
+  const paths = posts?.map((post) => ({
+    params: { id: post.id.toString() }
+  })) || [];
+
+  return {
+    paths,
+    fallback: 'blocking' // 또는 false나 true
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+
+  const id = params?.id;
+
+  const { data: post } = await supabase
+    .from('Post')
+      .select(
+        `id, preview_image_url, title, content, created_at, PostTag (
+          tag_id,
+          Tag (name)
+        )`,
+      )
+      .eq('id', id)
+      .single();
+
+  if (!post) {
+    return {
+      notFound: true
+    };
+  }
+
+  return {
+    props: {
+      post
+    },
+    revalidate: 3600 // 1시간마다 재생성 (선택사항)
+  };
+};
+
+export default function Post({ post }: PostPageProps) {
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const [headings, setHeadings] = useState<{ text: string; level: number }[]>(
     [],
@@ -48,40 +108,7 @@ export default function Post({ id }: PostProps) {
       text: match.replace(/^#+\s+/, ''),
       level: match.startsWith('##') ? 2 : 1,
     }));
-  };
-
-  const fetchPost = async (id: number) => {
-    const { data, error } = await supabase
-      .from('Post')
-      .select(
-        `id, preview_image_url, title, content, created_at, PostTag (
-          tag_id,
-          Tag (name)
-        )`,
-      )
-      .eq('id', id)
-      .single();
-
-    if (error) {
-      console.log(error);
-    } else {
-      const transformedData = {
-        id: data.id,
-        preview_image_url: data.preview_image_url,
-        title: data.title,
-        content: data.content,
-        created_at: data.created_at,
-        tags: data.PostTag.map((pt: any) => ({
-          tag_id: pt.tag_id,
-          name: pt.Tag.name,
-        })),
-      };
-      console.log(transformedData);
-
-      setPost(transformedData);
-      setHeadings(extractHeadings(transformedData.content));
-    }
-  };
+  };  
 
   const fetchComment = async (id: number) => {
     const { data, error } = await supabase
@@ -97,9 +124,9 @@ export default function Post({ id }: PostProps) {
   };
 
   useEffect(() => {
-    fetchPost(id);
-    fetchComment(id);
-  }, [id]);
+    setHeadings(extractHeadings(post.content));
+    fetchComment(post.id);    
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -145,13 +172,6 @@ export default function Post({ id }: PostProps) {
       const targetId = generateHeadingId(headingText);
       const element = document.getElementById(targetId);
 
-      console.log('Trying to scroll to:', {
-        targetId,
-        headingText,
-        elementFound: !!element,
-        attempt: attempts + 1,
-      });
-
       if (element) {
         element.scrollIntoView({
           behavior: 'smooth',
@@ -175,19 +195,19 @@ export default function Post({ id }: PostProps) {
         title={post?.title || ''}
         description={post?.content.substring(0, 160) || ''} // First 160 characters as description
         image={post?.preview_image_url || ''}
-        url={`/posts/${id}`}
+        url={`/posts/${post.id}`}
       />
-      <main className="container mx-auto flex flex-col px-4">
+      <main className="container mx-auto flex flex-col px-4 lg:max-w-[calc(100%-240px)] lg:ml-60 lg:pr-80">
         <div className="mt-8 w-full">
           {post ? (
             <>
               <div className="relative h-full">
                 <div className="absolute inset-0 bottom-4 z-10 flex flex-col items-center justify-end p-4 lg:bottom-8">
                   <div className="flex-row p-2">
-                    {post.tags.map((item, index) => (
+                    {post.PostTag.map((item, index) => (
                       <>
-                        <Tag key={index} tag={item.name} />
-                        {index < post.tags.length - 1 && (
+                        <Tag key={index} tag={item.Tag.name} />
+                        {index < post.PostTag.length - 1 && (
                           <span className="mx-1 text-[8px] text-white">•</span>
                         )}
                       </>
@@ -211,9 +231,9 @@ export default function Post({ id }: PostProps) {
               <div className="relative mt-8">
                 <div
                   id="tableofcontents"
-                  className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[1000px] lg:w-80 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
+                  className="block bg-white p-4 lg:fixed lg:top-24 lg:ml-[1000px] lg:w-60 lg:rounded-md lg:shadow-md lg:shadow-slate-200"
                 >
-                  <h3 className="mb-2 text-xl font-medium">
+                  <h3 className="mb-2 text-xs font-medium">
                     Table of Contents
                   </h3>
                   <nav className="relative">
@@ -227,7 +247,7 @@ export default function Post({ id }: PostProps) {
                           e.preventDefault();
                           scrollToHeading(heading.text);
                         }}
-                        className={`group relative flex items-center ${
+                        className={`group relative flex items-center text-xs ${
                           heading.level === 2 ? 'ml-4' : 'ml-4'
                         } mb-1`}
                       >
@@ -252,7 +272,7 @@ export default function Post({ id }: PostProps) {
                   </nav>
                   <a
                     href="#comment-input"
-                    className="ml-1 text-sm text-slate-600 hover:text-orange-400"
+                    className="ml-1 text-xs text-slate-600 hover:text-orange-400"
                     onClick={(e) => {
                       e.preventDefault();
                       scrollToHeading('comment-input');
@@ -269,7 +289,7 @@ export default function Post({ id }: PostProps) {
           )}
           <div className="mt-12 font-bold">{commentList.length} comments</div>
           <div className="my-4" id="comment-input">
-            <CommentInput postId={id} onAddComment={handleAddComment} />
+            <CommentInput postId={post.id} onAddComment={handleAddComment} />
           </div>
           {commentList.map((item, index) => (
             <CommentCard
@@ -285,13 +305,3 @@ export default function Post({ id }: PostProps) {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { id } = query;
-
-  return {
-    props: {
-      id: Number(id),
-    },
-  };
-};

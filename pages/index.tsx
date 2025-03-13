@@ -176,7 +176,7 @@ export default function Home({ posts, categories, selectedCategory, error }: Hom
         />
         <meta property="og:url" content="https://nerdinsight.vercel.app" />
       </Head>
-      <main className="container mx-auto flex flex-col px-4">
+      <main className="container mx-auto flex flex-col px-4 lg:max-w-[calc(100%-240px)] lg:ml-60">
         <div className="mt-4 w-full">
           {/* <div className="mb-3">
             <ReactSelect
@@ -221,7 +221,7 @@ export default function Home({ posts, categories, selectedCategory, error }: Hom
           </div> */}
           <div
             id="post_list"
-            className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2  lg:grid-cols-3"
+            className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2  lg:grid-cols-4"
           >
             {posts.map((item, index) => (
               <div key={index} className="w-full">

@@ -233,7 +233,7 @@ export default function Home({
           </div> */}
           <div
             id="post_list"
-            className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5"
+            className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5"
           >
             {posts.map((item, index) => (
               <div key={index} className="w-full">

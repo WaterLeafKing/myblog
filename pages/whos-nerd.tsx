@@ -4,7 +4,7 @@ export default function WhosNerd() {
   const router = useRouter();
 
   return (
-    <main className="container mx-auto flex flex-col px-4 sm:px-6 md:px-7 lg:px-8">
+    <main className="container mx-auto flex flex-col px-4 lg:ml-60 lg:max-w-[calc(100%-240px)]">
       <div className="mt-4 w-full">
         <div className="flex-col items-center justify-center">
           <div className="mx-auto size-60">

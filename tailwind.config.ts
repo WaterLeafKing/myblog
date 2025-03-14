@@ -7,6 +7,7 @@ const config: Config = {
   ],
   theme: {
     screens: {
+      '3xl': '1920px',
       '2xl': '1536px',
       xl: '1280px',
       lg: '1024px',

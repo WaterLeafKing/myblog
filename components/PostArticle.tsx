@@ -38,11 +38,11 @@ const PostArticle: FC<PostArticleProps> = ({
       </div>
       <div
         id="content_text"
-        className="relative flex w-full flex-col justify-center"
+        className="relative flex w-full flex-col justify-center gap-1"
       >
-        <div>
+        <div className="flex flex-wrap items-center gap-y-0.1">
           {tags.map((item, index) => (
-            <span key={index}>
+            <span key={index} className="flex items-center">
               <span className="text-[11px] font-thin text-slate-900">
                 {item.name}
               </span>

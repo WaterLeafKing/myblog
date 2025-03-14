@@ -103,7 +103,7 @@ importers:
         specifier: 8.4.41
         version: 8.4.41
       prettier:
-        specifier: 3.3.3
+        specifier: ^3.3.3
         version: 3.3.3
       tailwindcss:
         specifier: ^3.4.10

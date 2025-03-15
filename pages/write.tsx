@@ -163,9 +163,9 @@ export default function Write() {
   };
 
   return (
-    <main className="container mx-auto flex flex-col pt-4">
+    <main className="container mx-auto flex flex-col px-4 pt-4 lg:ml-60 lg:max-w-[calc(100%-240px)]">
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <input
             type="text"
             placeholder="제목"

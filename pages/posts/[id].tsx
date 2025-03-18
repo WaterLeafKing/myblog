@@ -231,6 +231,63 @@ export default function Post({ post }: PostPageProps) {
                     />
                   </div>
 
+                  <div className="lg:hidden">
+                    <div
+                      id="tableofcontents"
+                      className="bg-white p-4 lg:sticky lg:top-4 lg:shadow"
+                    >
+                      <h3 className="mb-2 text-sm font-medium">
+                        Table of Contents
+                      </h3>
+                      <nav className="relative">
+                        <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
+
+                        {headings.map((heading, index) => (
+                          <a
+                            key={index}
+                            href={`#${generateHeadingId(heading.text)}`}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              scrollToHeading(heading.text);
+                            }}
+                            className={`group relative flex items-center text-sm ${
+                              heading.level === 2 ? 'ml-4' : 'ml-4'
+                            } mb-1`}
+                          >
+                            <span
+                              className={`absolute -left-[13.6px] z-10 size-[12px] rounded-full border-4 border-white transition-colors ${
+                                activeHeading ===
+                                generateHeadingId(heading.text)
+                                  ? 'bg-orange-400'
+                                  : 'bg-slate-600 group-hover:bg-orange-400'
+                              }`}
+                            />
+                            <span
+                              className={`ml-4 transition-colors ${
+                                activeHeading ===
+                                generateHeadingId(heading.text)
+                                  ? 'text-orange-400'
+                                  : 'text-slate-600 group-hover:text-orange-400'
+                              }`}
+                            >
+                              {heading.text}
+                            </span>
+                          </a>
+                        ))}
+                      </nav>
+                      <a
+                        href="#comment-input"
+                        className="ml-1 text-xs text-slate-600 hover:text-orange-400"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToHeading('comment-input');
+                        }}
+                      >
+                        Comments
+                      </a>
+                    </div>
+                  </div>
+
                   <div className="relative mt-8">
                     <MarkdownViewer source={post.content} components={{}} />
                   </div>
@@ -256,7 +313,7 @@ export default function Post({ post }: PostPageProps) {
                 />
               ))}
             </div>
-            <div className="lg:col-span-1">
+            <div className="hidden lg:block lg:col-span-1">
               <div
                 id="tableofcontents"
                 className="bg-white p-4 lg:sticky lg:top-4 lg:shadow"

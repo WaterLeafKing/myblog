@@ -13,6 +13,7 @@ type PostArticleProps = {
 const PostArticle: FC<PostArticleProps> = ({
   image,
   title,
+  created_at,
   category,
   tags,
   duration_time,
@@ -70,6 +71,8 @@ const PostArticle: FC<PostArticleProps> = ({
             />
           </svg>
           {duration_time} min
+          <div>•</div>
+          <div>{created_at}</div>
         </div>
       </div>
     </div>

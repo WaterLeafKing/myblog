@@ -197,6 +197,7 @@ export default function Post({ post }: PostPageProps) {
         url={`/posts/${post.id}`}
       />
       <main className="mx-auto px-4 lg:ml-60">
+        <div id="the-top"></div>
         <div className="container mx-auto">
           <div className="mt-8 lg:grid lg:grid-cols-4 lg:gap-2">
             <div className="lg:col-span-3">
@@ -227,7 +228,7 @@ export default function Post({ post }: PostPageProps) {
                       height={675}
                       alt={post.title}
                       priority
-                      className="h-[300px] w-full rounded-lg object-cover md:h-[420px] lg:h-[520px]"
+                      className="h-[300px] w-full rounded-xl object-cover md:h-[420px] lg:h-[520px]"
                     />
                   </div>
 
@@ -239,6 +240,16 @@ export default function Post({ post }: PostPageProps) {
                       <h3 className="mb-2 text-sm font-medium">
                         Table of Contents
                       </h3>
+                      <a
+                        href="#the-top"
+                        className="ml-1 text-xs text-slate-600 hover:text-orange-400"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToHeading('the-top');
+                        }}
+                      >
+                        Top
+                      </a>
                       <nav className="relative">
                         <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
 
@@ -313,14 +324,24 @@ export default function Post({ post }: PostPageProps) {
                 />
               ))}
             </div>
-            <div className="hidden lg:block lg:col-span-1">
+            <div className="hidden lg:col-span-1 lg:block">
               <div
                 id="tableofcontents"
-                className="bg-white p-4 lg:sticky lg:top-4 lg:shadow"
+                className="rounded-xl bg-white p-4 lg:sticky lg:top-4 lg:shadow"
               >
                 <h3 className="mb-2 text-sm font-medium">Table of Contents</h3>
+                <a
+                  href="#the-top"
+                  className="ml-1 text-xs text-slate-600 hover:text-orange-400"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToHeading('the-top');
+                  }}
+                >
+                  Top
+                </a>
                 <nav className="relative">
-                  <div className="absolute left-2 top-0 h-full w-px bg-gray-300" />
+                  <div className="absolute left-2 h-full w-px bg-gray-300" />
 
                   {headings.map((heading, index) => (
                     <a

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /write
+Disallow: /rewrite
+Disallow: /analytics
 
 Sitemap: https://nerdinsight.vercel.app/sitemap.xml 

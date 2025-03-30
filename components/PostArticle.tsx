@@ -20,7 +20,7 @@ const PostArticle: FC<PostArticleProps> = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="relative h-44 shrink-0 overflow-hidden rounded-md border border-slate-200 md:h-40 lg:h-44">
+      <div className="relative h-44 shrink-0 overflow-hidden hover:border hover:border-slate-200 md:h-40 lg:h-44">
         {/* <img
           className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
           src={image}
@@ -31,17 +31,17 @@ const PostArticle: FC<PostArticleProps> = ({
           width={400}
           height={255}
           alt={title}
-          className="size-full rounded-md object-cover transition-all duration-500 hover:scale-105 hover:opacity-80"
+          className="size-full rounded-xl border border-slate-200 object-cover transition-all duration-500 hover:scale-105 hover:rounded-none hover:opacity-80"
         />
-        <div className="absolute left-2 top-2 rounded-full bg-black px-2 text-[9px] font-extralight text-white opacity-70">
+        {/* <div className="absolute left-2 top-2 rounded-full bg-black px-2 text-[9px] font-extralight text-white opacity-70">
           {category}
-        </div>
+        </div> */}
       </div>
       <div
         id="content_text"
         className="relative flex w-full flex-col justify-center gap-1"
       >
-        <div className="flex flex-wrap items-center gap-y-0.1">
+        <div className="gap-y-0.1 flex flex-wrap items-center">
           {tags.map((item, index) => (
             <span key={index} className="flex items-center">
               <span className="text-[11px] font-thin text-slate-900">

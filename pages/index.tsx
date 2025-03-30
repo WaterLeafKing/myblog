@@ -77,7 +77,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   try {
     const categoryId = query.category ? Number(query.category) : null;
 
-    const { data: posts, error: postsError } = (await supabase
+    // Supabase 쿼리에 카테고리 필터 추가
+    let postsQuery = supabase
       .from('Post')
       .select(
         `
@@ -94,8 +95,18 @@ export const getServerSideProps: GetServerSideProps = async ({
         duration_time
       `,
       )
-      .order('created_at', { ascending: false })
-      .range(0, 33)) as { data: PostWithJoins[] | null; error: any };
+      .order('created_at', { ascending: false });
+
+    // categoryId가 있고 0이 아닐 때만 필터링
+    if (categoryId && categoryId !== 0) {
+      postsQuery = postsQuery.eq('category_id', categoryId);
+    }
+
+    // 쿼리 실행
+    const { data: posts, error: postsError } = (await postsQuery.range(
+      0,
+      33,
+    )) as { data: PostWithJoins[] | null; error: any };
 
     const { data: categories, error: categoriesError } = await supabase
       .from('Category')
@@ -164,13 +175,35 @@ export default function Home({
 }: HomeProps) {
   const router = useRouter();
 
-  const categoryOptions = [
+  if (selectedCategory == null) selectedCategory = 0;
+
+  const superCategories = [
     { value: 0, label: 'All' },
     ...categories.map((category) => ({
       value: category.id,
       label: category.title,
     })),
   ];
+
+  // 카테고리 클릭 핸들러 수정
+  const handleCategoryClick = async (categoryId: number) => {
+    try {
+      if (categoryId === 0) {
+        await router.push('/', undefined, { scroll: false });
+      } else {
+        await router.push(
+          {
+            pathname: '/',
+            query: { category: categoryId },
+          },
+          undefined,
+          { scroll: false },
+        );
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
+  };
 
   return (
     <>
@@ -190,49 +223,21 @@ export default function Home({
       </Head>
       <main className="container mx-auto flex flex-col px-4 lg:ml-60 lg:max-w-[calc(100%-240px)]">
         <div className="mt-4 w-full">
-          {/* <div className="mb-3">
-            <ReactSelect
-              className="w-[160px] text-xs hover:cursor-pointer hover:rounded-full hover:bg-orange-200 focus:border focus:border-orange-400"
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  border: 'none',
-                  borderColor: state.isFocused
-                    ? '#fb923c'
-                    : baseStyles.borderColor,
-                  '&:hover': {
-                    borderColor: '#fb923c',
-                  },
-                  boxShadow: state.isFocused ? '0 0 0 1px #ffffff' : 'none',
-                  color: '#777777',
-                  caretColor: 'transparent',
-                  cursor: 'pointer',
-                }),
-                option: (baseStyles, state) => ({
-                  ...baseStyles,
-                  backgroundColor: state.isSelected ? '#fb923c' : 'white',
-                  '&:hover': {
-                    backgroundColor: state.isSelected ? '#fb923c' : '#fff8f1',
-                  },
-                  color: state.isSelected ? 'white' : '#777777',
-                  cursor: 'pointer',
-                }),
-                singleValue: (baseStyles) => ({
-                  ...baseStyles,
-                  color: '#777777',
-                }),
-              }}
-              options={categoryOptions}
-              placeholder="All"
-              isMulti={false}
-              onChange={(option) => {
-                const categoryId = option?.value || 0;
-                router.push(categoryId === 0 ? '/' : `/?category=${categoryId}`);
-              }}
-            />
-          </div> */}
-
-          <div className="mb-4 text-xs">posts</div>
+          <div className="mb-4 flex gap-2 text-xs">
+            {superCategories.map((item) => (
+              <div
+                key={item.value}
+                onClick={() => handleCategoryClick(item.value)}
+                className={`rounded-md px-2 py-1 hover:cursor-pointer hover:bg-orange-200 ${
+                  selectedCategory === item.value
+                    ? 'bg-orange-400 text-white'
+                    : 'bg-slate-100'
+                }`}
+              >
+                {item.label}
+              </div>
+            ))}
+          </div>
           <div
             id="post_list"
             className="grid w-full grid-cols-1 gap-2 custom:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5"

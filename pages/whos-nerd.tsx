@@ -7,10 +7,13 @@ export default function WhosNerd() {
     <main className="container mx-auto flex flex-col px-4 lg:ml-60 lg:max-w-[calc(100%-240px)]">
       <div className="mt-4 w-full">
         <div className="flex-col items-center justify-center">
-          <div className="mx-auto size-60">
-            <img src="https://img.freepik.com/premium-vector/animal-cute-otter-illustration_8035-13.jpg" />
+          <div className="mx-auto flex justify-center">
+            <img
+              src="https://storage.googleapis.com/nerdinsight/otter.jpeg"
+              className="size-80 rounded-full"
+            />
           </div>
-          <div className="mx-auto mb-10 block justify-center text-center sm:w-3/4">
+          <div className="mx-auto my-10 block justify-center text-center sm:w-3/4">
             Hi, Everyone. It&apos;s{' '}
             <span className="text-orange-600">Nerd</span>.
             <br />

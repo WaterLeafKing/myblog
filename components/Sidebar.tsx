@@ -5,6 +5,7 @@ import {
   AiOutlineHome,
   AiOutlineMenu,
   AiOutlineMessage,
+  AiOutlineNodeIndex,
   AiOutlineQuestionCircle,
   AiOutlineTeam,
 } from 'react-icons/ai';
@@ -66,6 +67,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose }) => {
         <div className="h-full overflow-y-auto px-2 pt-4">
           <Link href="/">
             <SideBarMenu title="Home" icon={AiOutlineHome} />
+          </Link>
+          <Link href="/graph">
+            <SideBarMenu title="Graph" icon={AiOutlineNodeIndex} />
           </Link>
           <Link href="/whos-nerd">
             <SideBarMenu title="Who's Nerd?" icon={AiOutlineQuestionCircle} />

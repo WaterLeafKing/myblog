@@ -126,6 +126,7 @@ export default function ReactFlowGraph() {
                   // 하나의 엣지만 생성
                   postEdges.push({
                     id: pairKey,
+                    type: 'straight',
                     source: post1.id.toString(),
                     target: post2.id.toString(),
                     style: { stroke: '#cacaca' },
